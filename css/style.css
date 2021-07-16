@@ -1,0 +1,152 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap");
+
+* {
+  margin: 0;
+  font-family: "Ubuntu", sans-serif;
+}
+
+body {
+  background-color: rgb(240, 240, 240);
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+.logoImg {
+  height: 0px;
+}
+
+.logoImg img {
+  width: 16%;
+  position: absolute;
+  top: -9%;
+  left: 8%;
+}
+
+.navlist {
+  display: flex;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background-color: rgb(255, 255, 255);
+}
+
+.navlist li {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  position: relative;
+  left: 700px;
+}
+
+.navlist a {
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: rgb(255, 255, 255);
+  padding-top: 18px;
+  padding-bottom: 18px;
+  border-radius: 4px;
+  color: black;
+  font-weight: bold;
+  background-image: url("images.png");
+}
+
+.navlist a:hover {
+  transition-duration: 0.3s;
+  background-color: rgb(245, 245, 245);
+}
+
+.login a {
+  background-color: rgb(194, 44, 101);
+  padding-bottom: 13px;
+  padding-top: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 2px;
+  position: relative;
+  left: 1190px;
+  bottom: 63px;
+  box-shadow: 0px 1px 1px 0px rgb(109, 109, 109);
+}
+
+.login a:hover {
+  transition-duration: 0.3s;
+  background-color: rgb(151, 0, 63);
+}
+
+.admin a {
+  background-color: rgb(59, 44, 194);
+  padding-bottom: 13px;
+  padding-top: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 2px;
+  position: relative;
+  left: 1300px;
+  bottom: 86px;
+  box-shadow: 0px 1px 1px 0px rgb(109, 109, 109);
+}
+
+.admin a:hover {
+  transition-duration: 0.3s;
+  background-color: rgb(23, 0, 151);
+}
+
+.intro {
+  position: relative;
+  bottom: 50px;
+  background-color: #fff9f5;
+}
+
+.intro img {
+  position: relative;
+  left: 10%;
+  width: 50%;
+  height: 90%;
+}
+
+.feedbackQuote {
+  color: #000e5c;
+  position: relative;
+  bottom: 350px;
+  left: 950px;
+  text-align: center;
+  width: 30%;
+  padding: 30px;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.feedbackQuote a {
+  background-color: #480083;
+  padding: 20px;
+  box-shadow: 0px 1px 2px 1px rgb(54, 54, 54);
+  border-radius: 2px;
+  color: rgb(255, 255, 255);
+}
+
+.feedbackQuote a:hover {
+  transition-duration: 0.3s;
+  background-color: #190052;
+}
+
+.features {
+  height: 10px;
+}
+
+.features img {
+  width: 70%;
+  position: relative;
+  bottom: 350px;
+  left: 230px;
+}
