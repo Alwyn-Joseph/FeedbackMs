@@ -27,14 +27,14 @@ a {
 }
 
 ::-webkit-scrollbar:hover {
-  width: 10px;
+  width: 7px;
 }
 
-/* Track
+/* Track*/
 ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 5px grey;
   border-radius: 5px;
-} */
+}
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
@@ -416,6 +416,11 @@ img.goBack:hover {
   font-family: "Nunito", sans-serif;
 }
 
+.mainsection {
+  position: relative;
+  left: 250px;
+}
+
 .logoImg {
   height: 0px;
 }
@@ -441,7 +446,7 @@ img.goBack:hover {
   padding-top: 10px;
   padding-bottom: 0px;
   position: relative;
-  left: 1100px;
+  left: 800px;
   bottom: 10px;
 }
 
@@ -490,12 +495,12 @@ img.goBack:hover {
   position: relative;
   font-size: 16px;
   bottom: 90.5px;
-  left: 6px;
+  left: 0px;
 }
 
 .dropdown {
   position: relative;
-  left: 1320px;
+  left: 1000px;
   height: 0px;
   bottom: 0px;
   background-color: #282930;
@@ -568,6 +573,7 @@ img.goBack:hover {
   text-align: center;
   padding: 3%;
   font-size: 30px;
+  margin-top: 3.2px;
 }
 
 .sideNav li {

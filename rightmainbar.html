@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <title>FMS | Admin</title>
     <style>
-        @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
-
         @import url(https://fonts.googleapis.com/css?family=Titillium+Web:300);
 
         .fa-2x {
@@ -38,13 +36,12 @@
             background: #212121;
             border-right: 1px solid #e5e5e5;
             position: absolute;
-            text-align: center;
             top: 0;
             bottom: 0;
             height: 100%;
             left: 0;
             width: 250px;
-            overflow: hidden;
+            overflow: visible;
             -webkit-transition: width .05s linear;
             transition: width .05s linear;
             -webkit-transform: translateZ(0) scale(1, 1);
@@ -90,6 +87,9 @@
             display: table-cell;
             vertical-align: middle;
             width: 190px;
+            left: -35px;
+            font-size: 20px;
+            padding: 10px;
             font-family: 'Titillium Web', sans-serif;
         }
 
@@ -155,85 +155,105 @@
             src: local('Titillium WebLight'), local('TitilliumWeb-Light'), url(http://themes.googleusercontent.com/static/fonts/titilliumweb/v2/anMUvcNT0H1YN4FII8wpr24bNCNEoFTpS2BTjF6FB5E.woff) format('woff');
         }
     </style>
+
 </head>
 
 <body class="adminBody">
-    <div class="area"></div>
     <nav class="main-menu">
-        <ul>
-            <li>
-                <a href="admindashboard.html">
-                    <i class="fa fa-home fa-2x"></i>
-                    <span class="nav-text">
-                        Dashboard
-                    </span>
-                </a>
+        <center>
+            <ul>
+                <li>
+                    <br><br><br><br>
+                    <a href="admindashboard.html">
+                        <i class="fa fa-home fa-2x"></i>
 
-            </li>
-            <li class="has-subnav">
-                <a href="#">
-                    <i class="fa fa-laptop fa-2x"></i>
-                    <span class="nav-text">
-                        Feedbacks
-                    </span>
-                </a>
+                        <span class="nav-text">
+                            Dashboard
+                        </span>
+                    </a>
 
-            </li>
-            <li class="has-subnav">
-                <a href="#">
-                    <i class="fa fa-list fa-2x"></i>
-                    <span class="nav-text">
-                        Forms
-                    </span>
-                </a>
+                </li>
+                <li class="has-subnav">
+                    <a href="#">
+                        <i class="fa fa-laptop fa-2x"></i>
+                        <span class="nav-text">
+                            Feedbacks
+                        </span>
+                    </a>
 
-            </li>
-            <li class="has-subnav">
-                <a href="#">
-                    <i class="fa fa-folder-open fa-2x"></i>
-                    <span class="nav-text">
-                        Faculties
-                    </span>
-                </a>
+                </li>
+                <li class="has-subnav">
+                    <a href="#">
+                        <i class="fa fa-list fa-2x"></i>
+                        <span class="nav-text">
+                            Forms
+                        </span>
+                    </a>
 
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-bar-chart-o fa-2x"></i>
-                    <span class="nav-text">
-                        Students
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-font fa-2x"></i>
-                    <span class="nav-text">
-                        Branches
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-table fa-2x"></i>
-                    <span class="nav-text">
-                        Questions
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-bar-chart-o fa-2x"></i>
-                    <span class="nav-text">
-                        Feedback Statistics
-                    </span>
-                </a>
-            </li>
-        </ul>
+                </li>
+                <li class="has-subnav">
+                    <a href="#">
+                        <i class="fa fa-folder-open fa-2x"></i>
+                        <span class="nav-text">
+                            Faculties
+                        </span>
+                    </a>
+
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-bar-chart-o fa-2x"></i>
+                        <span class="nav-text">
+                            Students
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-font fa-2x"></i>
+                        <span class="nav-text">
+                            Branches
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-table fa-2x"></i>
+                        <span class="nav-text">
+                            Questions
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-bar-chart-o fa-2x"></i>
+                        <span class="nav-text">
+                            Feedback Statistics
+                        </span>
+                    </a>
+                </li>
+            </ul>
     </nav>
-</body>
+    </center>
+    <div class="mainsection">
+        <div class="logoImg">
+            <a href="home.html"><img src="images/HeadLogo.png" alt="Alva's Feedback System"></a>
+        </div>
+        <ul class="adminNavlist">
+            <li><a href="#notification">Notifications <sup>1</sup></a></li>
+        </ul>
 
-</html>
+        <div class="dropdown">
+            <button class="dropBtn"><b>Alwyn Joseph</b><img src="images/user.png" alt=""></button>
+            <div class="dropdownContent">
+                <a href="">Profile</a>
+                <a href="">Activity Log</a>
+                <span>___________</span>
+                <a href="logout.php">Logout</a>
+                <br>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

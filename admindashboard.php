@@ -1,3 +1,9 @@
+<?php
+session_start();
+
+if (isset($_SESSION['uname'])) {
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,9 +17,9 @@
     <style>
     </style>
 </head>
-<frameset cols="20%, 80%">
+<frameset cols="15%,80%">
     <frame name="left" src="sidebar.html" />
-    <frame name="main" src="home.html" />
+    <frame name="main" src="rightmainbar.html" />
     <noframes>
 
         <body>The browser you are working does not
@@ -22,3 +28,9 @@
 </frameset>
 
 </html>
+
+<?php
+} else {
+    echo "<script>location.href='adminlogin.html'</script>";
+}
+?>
