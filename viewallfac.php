@@ -1,7 +1,7 @@
 <?php
-session_start();
-
+if (!session_id()) session_start();
 if (isset($_SESSION['login_user'])) {
+
 ?>
 
 </html>
@@ -163,6 +163,15 @@ if (isset($_SESSION['login_user'])) {
     #signinbtn:hover {
         background-color: #343a40;
     }
+
+    a {
+        text-decoration: none;
+    }
+
+    td,
+    tr {
+        text-align: center;
+    }
     </style>
 </head>
 
@@ -191,7 +200,7 @@ if (isset($_SESSION['login_user'])) {
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" id="dash" aria-current="page" href="admindashboard.php">
+                            <a class="nav-link" id="dash" aria-current="page" href="admindashboard.php">
                                 <span data-feather="home"></span>
                                 Dashboard
                             </a>
@@ -204,7 +213,7 @@ if (isset($_SESSION['login_user'])) {
                             </a>
                         </h6>
                         <li class="nav-item">
-                            <a class="nav-link" href="faculties.php">
+                            <a class="nav-link active" href="faculties.php">
                                 <span data-feather="shopping-cart"></span>
                                 Faculties
                             </a>
@@ -285,31 +294,100 @@ if (isset($_SESSION['login_user'])) {
             <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Dashboard</h1>
+                    <h1 class="h2">All Faculties</h1>
+                    <button type="button" class="btn btn-primary" onclick="searchView()">Search Faculty</button>
                     <div class="btn-toolbar mb-2 mb-md-0">
-                        <div class="btn-group mr-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                        <div class="btn-toolbar mb-2 mb-md-0">
+                            <div class="btn-group mr-2">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                                <a href="faculties.php" type="button" class="btn btn-light btn-outline-secondary"><i
+                                        class="bi bi-arrow-90deg-left"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+                <table class="table table-striped" id="viewTable">
+                    <tbody>
+                        <tr>
+                            <th>Faculty Id</th>
+                            <th>Faculty Name</th>
+                            <th>Department</th>
+                        </tr>
+                        <?php
+                            include 'config.php';
+                            $sql = "SELECT * FROM faculty";
+                            $query = mysqli_query($con, $sql);
+                            while ($row = mysqli_fetch_array($query)) {
+                                echo '
+                                <tr>
+                                <td>' . $row['f_id'] . '</td>
+                                <td>' . $row['f_name'] . '</td>
+                                <td>' . $row['d_id'] . '</td>
+                                </tr>';
+                            }
+                            mysqli_close($con);
+                            ?>
+                    </tbody>
+                </table>
+                <form id="searchForm" style="display:none;">
+                    <div class="mb-4">
+                        <label for="inputId" class="form-label">Enter Faculty ID</label>
+                        <input name="fid" type="text" class="form-control" id="inputId" aria-describedby="text">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                    <button type="button" class="btn btn-secondary" onclick="allView()">All Faculties</button>
+                </form>
+
             </main>
-        </div>
-    </div>
+            <?php
+                $fac_id = $_POST('fid');
+
+                $sql1 = "SELECT * FROM faculty WHERE f_id='.$fac_id.'";
+                $query = mysqli_query($con, $sql);
+                $row = mysqli_fetch_array($query);
+                $count = mysqli_num_rows($query);
+
+                if ($count == 1) {
+                    while ($row = mysqli_fetch_array($query)) {
+                        echo '
+                                <tr>
+                                <td>' . $row['f_id'] . '</td>
+                                <td>' . $row['f_name'] . '</td>
+                                <td>' . $row['d_id'] . '</td>
+                                </tr>';
+                    }
+                }
+
+                ?>
 
 
-    <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-DBjhmceckmzwrnMMrjI7BvG2FmRuxQVaTfFYHgfnrdfqMhxKt445b7j3KBQLolRl" crossorigin="anonymous">
-    </script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.24.1/feather.min.js"
-        integrity="sha384-EbSscX4STvYAC/DxHse8z5gEDaNiKAIGW+EpfzYTfQrgIlHywXXrM9SUIZ0BlyfF" crossorigin="anonymous">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
-        integrity="sha384-i+dHPTzZw7YVZOx9lbH5l6lP74sLRtMtwN2XjVqjf3uAGAREAF4LMIUDTWEVs4LI" crossorigin="anonymous">
-    </script>
-    <script src="dashboard.js"></script>
+            <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-DBjhmceckmzwrnMMrjI7BvG2FmRuxQVaTfFYHgfnrdfqMhxKt445b7j3KBQLolRl"
+                crossorigin="anonymous">
+            </script>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.24.1/feather.min.js"
+                integrity="sha384-EbSscX4STvYAC/DxHse8z5gEDaNiKAIGW+EpfzYTfQrgIlHywXXrM9SUIZ0BlyfF"
+                crossorigin="anonymous">
+            </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
+                integrity="sha384-i+dHPTzZw7YVZOx9lbH5l6lP74sLRtMtwN2XjVqjf3uAGAREAF4LMIUDTWEVs4LI"
+                crossorigin="anonymous">
+            </script>
+            <script src="dashboard.js"></script>
+            <script>
+            function searchView() {
+                document.getElementById('viewTable').style.display = "none";
+                document.getElementById('searchForm').style.display = "block";
+            }
+
+            function allView() {
+                document.getElementById('viewTable').style.display = "table";
+                document.getElementById('searchForm').style.display = "none";
+            }
+            </script>
 </body>
 
 </html>

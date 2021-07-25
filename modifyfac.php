@@ -163,6 +163,15 @@ if (isset($_SESSION['login_user'])) {
     #signinbtn:hover {
         background-color: #343a40;
     }
+
+    a {
+        text-decoration: none;
+    }
+
+    td,
+    tr {
+        text-align: center;
+    }
     </style>
 </head>
 
@@ -191,7 +200,7 @@ if (isset($_SESSION['login_user'])) {
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" id="dash" aria-current="page" href="admindashboard.php">
+                            <a class="nav-link" id="dash" aria-current="page" href="admindashboard.php">
                                 <span data-feather="home"></span>
                                 Dashboard
                             </a>
@@ -204,7 +213,7 @@ if (isset($_SESSION['login_user'])) {
                             </a>
                         </h6>
                         <li class="nav-item">
-                            <a class="nav-link" href="faculties.php">
+                            <a class="nav-link active" href="faculties.php">
                                 <span data-feather="shopping-cart"></span>
                                 Faculties
                             </a>
@@ -285,31 +294,109 @@ if (isset($_SESSION['login_user'])) {
             <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Dashboard</h1>
+                    <h1 class="h2">Modify</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
-                        <div class="btn-group mr-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                        <div class="btn-toolbar mb-2 mb-md-0">
+                            <div class="btn-group mr-2">
+                                <a href="faculties.php" type="button" class="btn btn-light btn-outline-secondary"><i
+                                        class="bi bi-arrow-90deg-left"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+                <form id="searchForm">
+                    <div class="mb-3">
+                        <label for="inputId" class="form-label">Enter faculty ID, which has to be updated</label>
+                        <input type="text" class="form-control" id="inputId" aria-describedby="text" required>
+                    </div>
+                    <div id="">
+                        <button type="button" class="btn btn-primary" onclick="modify()">Search</button>
+                </form>
+                <br>
+                <br>
+                <div id="sec2" style="display:none">
+                    <table class="table table-striped" id="viewModTable">
+                        <tbody>
+                            <tr>
+                                <th>Faculty Id</th>
+                                <th>Faculty Name</th>
+                                <th>Department</th>
+                            </tr>
+                            <?php
+                                /*while ($row = mysqli_fetch_array($sql1)) {
+                                echo '
+                                <tr class="special">
+                                <td>' . $row['f_id'] . '</td>
+                                <td>' . $row['ename'] . '</td>
+                                <td>' . $row['basic'] . '</td>
+                                </tr>';
+                            }*/
+
+                                ?>
+                            <tr>
+                                <td>F101</td>
+                                <td>Kishore Raj</td>
+                                <td>Chemistry</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td> <button class="btn btn-danger" type="button">
+                                        Delete Faculty
+                                    </button></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div
+                        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">New Details</h1>
+                    </div>
+                    <form class="row g-3 needs-validation">
+                        <div class="col-md-4">
+                            <label for="fullNameInput" class="form-label">New Full name</label>
+                            <input type="text" class="form-control" id="fullNameInput" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="departmentInput" class="form-label">New Department</label>
+                            <select class="form-select" id="departmentInput" required>
+                                <option selected disabled value="">Choose...</option>
+                                <option>Chemistry</option>
+                                <option>Biology</option>
+                                <option>Physics</option>
+                                <option>Mathematics</option>
+                                <option>Arts</option>
+                                <option>Commerce</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-success" type="submit">Modify Faculty</button>
+                        </div>
+                    </form>
+                </div>
+
             </main>
-        </div>
-    </div>
 
 
-    <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-DBjhmceckmzwrnMMrjI7BvG2FmRuxQVaTfFYHgfnrdfqMhxKt445b7j3KBQLolRl" crossorigin="anonymous">
-    </script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.24.1/feather.min.js"
-        integrity="sha384-EbSscX4STvYAC/DxHse8z5gEDaNiKAIGW+EpfzYTfQrgIlHywXXrM9SUIZ0BlyfF" crossorigin="anonymous">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
-        integrity="sha384-i+dHPTzZw7YVZOx9lbH5l6lP74sLRtMtwN2XjVqjf3uAGAREAF4LMIUDTWEVs4LI" crossorigin="anonymous">
-    </script>
-    <script src="dashboard.js"></script>
+            <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-DBjhmceckmzwrnMMrjI7BvG2FmRuxQVaTfFYHgfnrdfqMhxKt445b7j3KBQLolRl"
+                crossorigin="anonymous">
+            </script>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.24.1/feather.min.js"
+                integrity="sha384-EbSscX4STvYAC/DxHse8z5gEDaNiKAIGW+EpfzYTfQrgIlHywXXrM9SUIZ0BlyfF"
+                crossorigin="anonymous">
+            </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
+                integrity="sha384-i+dHPTzZw7YVZOx9lbH5l6lP74sLRtMtwN2XjVqjf3uAGAREAF4LMIUDTWEVs4LI"
+                crossorigin="anonymous">
+            </script>
+            <script src="dashboard.js"></script>
+            <script>
+            function modify() {
+                document.getElementById('sec2').style.display = "block";
+            }
+            </script>
 </body>
 
 </html>

@@ -191,7 +191,7 @@ if (isset($_SESSION['login_user'])) {
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" id="dash" aria-current="page" href="admindashboard.php">
+                            <a class="nav-link" id="dash" aria-current="page" href="admindashboard.php">
                                 <span data-feather="home"></span>
                                 Dashboard
                             </a>
@@ -210,7 +210,7 @@ if (isset($_SESSION['login_user'])) {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="students.php">
+                            <a class="nav-link active" href="students.php">
                                 <span data-feather="users"></span>
                                 Students
                             </a>
@@ -282,19 +282,57 @@ if (isset($_SESSION['login_user'])) {
                     </ul>
                 </div>
             </nav>
+
             <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Dashboard</h1>
+                    <h1 class="h2">Student</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
-                        <div class="btn-group mr-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 mb-4">
+                            <div class="card" style="width:18rem;">
+                                <img src="images/viewfac.png" class="card-img-top" alt="feedbacks">
+                                <div class="card-body">
+                                    <h5 class="card-title">View Student</h5>
+                                    <a href="viewstud.php" class="btn btn-primary">View</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 mb-4">
+                            <div class="card" style="width:18rem;">
+                                <img src="images/addfac.png" class="card-img-top" alt="add">
+                                <div class="card-body">
+                                    <h5 class="card-title">Add Students</h5>
+                                    <a href="addstud.php" class="btn btn-primary">Add</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 mb-4">
+                            <div class="card" style="width:18rem;">
+                                <img src="images/viewfac.png" class="card-img-top" alt="add">
+                                <div class="card-body">
+                                    <h5 class="card-title">Modify Students</h5>
+                                    <a href="modstud.php" class="btn btn-primary">View</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 mb-4">
+                            <div class="card" style="width:18rem;">
+                                <img src="images/viewfac.png" class="card-img-top" alt="add">
+                                <div class="card-body">
+                                    <h5 class="card-title">Remove Student</h5>
+                                    <a href="removestud.php" class="btn btn-primary">Modify</i></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
             </main>
+
         </div>
     </div>
 
