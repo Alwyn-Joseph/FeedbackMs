@@ -326,43 +326,19 @@ if (isset($_SESSION['login_user'])) {
                                 <td>' . $row['d_id'] . '</td>
                                 </tr>';
                             }
-                            mysqli_close($con);
                             ?>
                     </tbody>
                 </table>
-                <form id="searchForm" style="display:none;">
+                <form method="post" action="searchFac.php" id="searchForm" style="display:none;">
                     <div class="mb-4">
                         <label for="inputId" class="form-label">Enter Faculty ID</label>
                         <input name="fid" type="text" class="form-control" id="inputId" aria-describedby="text">
                     </div>
-                    <button type="submit" class="btn btn-primary">Search</button>
+                    <button name="submit" class="btn btn-primary">Search</button>
                     <button type="button" class="btn btn-secondary" onclick="allView()">All Faculties</button>
                 </form>
 
             </main>
-            <?php
-                $fac_id = $_POST('fid');
-
-                $sql1 = "SELECT * FROM faculty WHERE f_id='.$fac_id.'";
-                $query = mysqli_query($con, $sql);
-                $row = mysqli_fetch_array($query);
-                $count = mysqli_num_rows($query);
-
-                if ($count == 1) {
-                    while ($row = mysqli_fetch_array($query)) {
-                        echo '
-                                <tr>
-                                <td>' . $row['f_id'] . '</td>
-                                <td>' . $row['f_name'] . '</td>
-                                <td>' . $row['d_id'] . '</td>
-                                </tr>';
-                    }
-                }
-
-                ?>
-
-
-
             <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-DBjhmceckmzwrnMMrjI7BvG2FmRuxQVaTfFYHgfnrdfqMhxKt445b7j3KBQLolRl"
                 crossorigin="anonymous">

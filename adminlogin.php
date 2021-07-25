@@ -3,6 +3,8 @@ include("config.php");
 if (isset($_SESSION['username'])) {
     header("location: admindashboard.php");
 }
+session_start();
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = mysqli_real_escape_string($con, $_POST['uname']);
