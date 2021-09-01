@@ -1,7 +1,7 @@
 <?php
 include("config.php");
 if (isset($_SESSION['username'])) {
-    header("location: admindashboard.php");
+    header("location: faculties.php");
 }
 session_start();
 
@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($count == 1) {
         $_SESSION['login_user'] = $username;
-        header("location: admindashboard.php");
+        header("location: faculties.php");
     } else {
         echo '<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
         </script>

@@ -242,7 +242,7 @@ if (isset($_SESSION['login_user'])) {
                         <li class="nav-item">
                             <a class="nav-link" href="questions.php">
                                 <span data-feather="layers"></span>
-                                Questions
+                                Manage Forms
                             </a>
                         </li>
                     </ul>

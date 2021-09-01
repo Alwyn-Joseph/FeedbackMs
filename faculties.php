@@ -242,7 +242,7 @@ if (isset($_SESSION['login_user'])) {
                         <li class="nav-item">
                             <a class="nav-link" href="questions.php">
                                 <span data-feather="layers"></span>
-                                Questions
+                                Manage Forms
                             </a>
                         </li>
                     </ul>
@@ -315,7 +315,7 @@ if (isset($_SESSION['login_user'])) {
                                 <img src="images/viewfac.png" class="card-img-top" alt="add">
                                 <div class="card-body">
                                     <h5 class="card-title">View All Faculties</h5>
-                                    <a href="viewallfac.php" class="btn btn-primary">View</a>
+                                    <a href="allfac.php" class="btn btn-primary">View</a>
                                 </div>
                             </div>
                         </div>
@@ -330,7 +330,6 @@ if (isset($_SESSION['login_user'])) {
                         </div>
                     </div>
                 </div>
-                <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
             </main>
 
         </div>

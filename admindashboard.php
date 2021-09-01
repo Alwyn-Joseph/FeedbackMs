@@ -1,9 +1,11 @@
 <?php
+/*
 
 session_start();
+$_SESSION['login_user_alumni'] = "set";
 
-if (isset($_SESSION['login_user'])) {
-
+if (isset($_SESSION['login_user_alumni'])) {
+*/
 ?>
 
 
@@ -245,7 +247,7 @@ if (isset($_SESSION['login_user'])) {
                         <li class="nav-item">
                             <a class="nav-link" href="questions.php">
                                 <span data-feather="layers"></span>
-                                Questions
+                                Manage Forms
                             </a>
                         </li>
                     </ul>
@@ -318,7 +320,9 @@ if (isset($_SESSION['login_user'])) {
 </html>
 
 <?php
+/*
 } else {
     echo "<script>location.href='adminlogin.php'</script>";
 }
+*/
 ?>

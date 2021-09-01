@@ -169,7 +169,8 @@ if (isset($_SESSION['login_user'])) {
 <body>
 
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#"><img src="images/Logo.png" width="30" alt="alvas">
+        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="home.html"><img src="images/Logo.png" width="30"
+                alt="alvas">
             Alva's
             Feedback System</a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
@@ -242,7 +243,7 @@ if (isset($_SESSION['login_user'])) {
                         <li class="nav-item">
                             <a class="nav-link active" href="questions.php">
                                 <span data-feather="layers"></span>
-                                Questions
+                                Manage Forms
                             </a>
                         </li>
                     </ul>
@@ -286,15 +287,99 @@ if (isset($_SESSION['login_user'])) {
             <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Questions</h1>
+                    <h1 class="h2">Manage Forms</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group mr-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+
                         </div>
                     </div>
                 </div>
-                <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 mb-4">
+                            <div class="card" style="width:18rem;">
+                                <img src="images/modfac.png" class="card-img-top" alt="feedbacks">
+                                <div class="card-body">
+                                    <h5 class="card-title">Faculty Feedback Form</h5>
+                                    <a href="viewfacfeed.php" class="btn btn-primary">View</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 mb-4">
+                            <div class="card" style="width:18rem;">
+                                <img src="images/modfac.png" class="card-img-top" alt="add">
+                                <div class="card-body">
+                                    <h5 class="card-title">Facility Feedback Form</h5>
+                                    <a href="addfac.php" class="btn btn-primary">View</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 mb-4">
+                            <div class="card" style="width:18rem;">
+                                <img src="images/modfac.png" class="card-img-top" alt="add">
+                                <div class="card-body">
+                                    <h5 class="card-title">Course Feedback Form</h5>
+                                    <a href="allfac.php" class="btn btn-primary">View</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 mb-4">
+                            <div class="card" style="width:18rem;">
+                                <img src="images/modfac.png" class="card-img-top" alt="add">
+                                <div class="card-body">
+                                    <h5 class="card-title">Department Feedback Form</h5>
+                                    <a href="modifyfac.php" class="btn btn-primary">Modify</i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 mb-4">
+                            <div class="card" style="width:18rem;">
+                                <img src="images/modfac.png" class="card-img-top" alt="add">
+                                <div class="card-body">
+                                    <h5 class="card-title">Employer Feedback Form</h5>
+                                    <a href="modifyfac.php" class="btn btn-primary">Modify</i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 mb-4">
+                            <div class="card" style="width:18rem;">
+                                <img src="images/modfac.png" class="card-img-top" alt="add">
+                                <div class="card-body">
+                                    <h5 class="card-title">Alumni Feedback Form</h5>
+                                    <a href="modifyfac.php" class="btn btn-primary">Modify</i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 mb-4">
+                            <div class="card" style="width:18rem;">
+                                <img src="images/modfac.png" class="card-img-top" alt="add">
+                                <div class="card-body">
+                                    <h5 class="card-title">Event Feedback Form</h5>
+                                    <a href="modifyfac.php" class="btn btn-primary">Modify</i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 mb-4">
+                            <div class="card" style="width:18rem;">
+                                <img src="images/modfac.png" class="card-img-top" alt="add">
+                                <div class="card-body">
+                                    <h5 class="card-title">Examiner Feedback Forms</h5>
+                                    <a href="modifyfac.php" class="btn btn-primary">Modify</i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card text-center">
+                            <div class="card-header">
+                                New
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Add a New Form</h5>
+                                <p class="card-text"></p>
+                                <a href="#" class="btn btn-success">Add New</a>
+                            </div>
+                        </div>
+                    </div>
+                </div><canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
             </main>
         </div>
     </div>

@@ -242,7 +242,7 @@ if (isset($_SESSION['login_user'])) {
                         <li class="nav-item">
                             <a class="nav-link" href="questions.php">
                                 <span data-feather="layers"></span>
-                                Questions
+                                Manage Forms
                             </a>
                         </li>
                     </ul>
@@ -288,13 +288,71 @@ if (isset($_SESSION['login_user'])) {
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Employer</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
-                        <div class="btn-group mr-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 mb-4">
+                            <div class="card" style="width:18rem;">
+                                <img src="images/Accenture.jpg" class="card-img-top" alt="feedbacks">
+                                <div class="card-body">
+                                    <h5 class="card-title">Accenture</h5>
+                                    <a href="viewfacfeed.php" class="btn btn-primary">View</a>
+                                    <a href="viewfacfeed.php" class="btn btn-outline-primary">Message</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 mb-4">
+                            <div class="card" style="width:18rem;">
+                                <img src="images/cognizant.jpg" class="card-img-top" alt="add">
+                                <div class="card-body">
+                                    <h5 class="card-title">Cognizant</h5>
+                                    <a href="addfac.php" class="btn btn-primary">View</a>
+                                    <a href="viewfacfeed.php" class="btn btn-outline-primary">Message</a>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 mb-4">
+                            <div class="card" style="width:18rem;">
+                                <img src="images/tcs.jpg" class="card-img-top" alt="add">
+                                <div class="card-body">
+                                    <h5 class="card-title">TCS</h5>
+                                    <a href="allfac.php" class="btn btn-primary">View</a>
+                                    <a href="viewfacfeed.php" class="btn btn-outline-primary">Message</a>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 mb-4">
+                            <div class="card" style="width:18rem;">
+                                <img src="images/infosys.jpg" class="card-img-top" alt="add">
+                                <div class="card-body">
+                                    <h5 class="card-title">Infosys</h5>
+                                    <a href="modifyfac.php" class="btn btn-primary">View</i></a>
+                                    <a href="viewfacfeed.php" class="btn btn-outline-primary">Message</a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <a href="#" class="btn btn-outline-primary">See More</a>
+                        <br><br>
+
+
+
+                    </div>
+
+                    <div class="card text-center">
+                        <div class="card-header">
+                            New
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Add a New Employer</h5>
+                            <p class="card-text"></p>
+                            <a href="#" class="btn btn-success">Add New</a>
                         </div>
                     </div>
                 </div>
-                <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
             </main>
         </div>
     </div>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+include "config.php";
 if (isset($_SESSION['login_user'])) {
 ?>
 
@@ -362,10 +362,11 @@ if (isset($_SESSION['login_user'])) {
                             ?>
                     </tbody>
                 </table>
-                <form id="analyseForm" method="POST" action="" style="display:none;">
+                <form id="analyseForm" method="POST" action="analisedview.php" style="display:none;">
                     <div class="mb-4">
                         <label for="inputId" class="form-label">Enter Faculty ID</label>
-                        <input type="text" class="form-control" id="inputId" aria-describedby="text">
+                        <input type="text" class="form-control" id="inputId" name="fId" aria-describedby="text"
+                            required>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                     <button type="button" class="btn btn-secondary" onclick="tableView()">Return to Table View</button>
