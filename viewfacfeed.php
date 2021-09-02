@@ -300,7 +300,8 @@ if (isset($_SESSION['login_user'])) {
                         <div class="btn-toolbar mb-2 mb-md-0">
                             <div class="btn-group mr-2">
                                 <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary"
+                                    onclick="exportData()">Export</button>
                                 <button type="button" class="btn btn-sm btn-outline-secondary">Week</button>
                                 <a href="faculties.php" type="button" class="btn btn-light btn-outline-secondary"><i
                                         class="bi bi-arrow-90deg-left"></i></a>
@@ -396,6 +397,73 @@ if (isset($_SESSION['login_user'])) {
                 document.getElementById('facFeedTable').style.display = "table";
                 document.getElementById('analyseForm').style.display = "none";
             }
+
+            function exportData() {
+                var table = document.getElementById("facFeedTable");
+
+                var rows = [];
+
+                for (var i = 0, row; row = table.rows[i]; i++) {
+                    col1 = row.cells[0].innerText;
+                    col2 = row.cells[1].innerText;
+                    col3 = row.cells[2].innerText;
+                    col4 = row.cells[3].innerText;
+                    col5 = row.cells[4].innerText;
+                    col6 = row.cells[0].innerText;
+                    col7 = row.cells[1].innerText;
+                    col8 = row.cells[2].innerText;
+                    col9 = row.cells[3].innerText;
+                    col10 = row.cells[4].innerText;
+                    col11 = row.cells[0].innerText;
+                    col12 = row.cells[1].innerText;
+                    col13 = row.cells[2].innerText;
+                    col14 = row.cells[3].innerText;
+                    col15 = row.cells[4].innerText;
+                    col16 = row.cells[0].innerText;
+                    col7 = row.cells[1].innerText;
+                    col8 = row.cells[2].innerText;
+                    col9 = row.cells[3].innerText;
+                    col20 = row.cells[4].innerText;
+                }
+
+                rows.push(
+                    [
+                        col1,
+                        col2,
+                        col3,
+                        col4,
+                        col5,
+                        col6,
+                        col7,
+                        col8,
+                        col9,
+                        col10,
+                        col11,
+                        col12,
+                        col13,
+                        col14,
+                        col15,
+                        col16,
+                        col17,
+                        col18,
+                        col19,
+                        col20,
+                    ]
+                );
+            }
+
+            csvContent = "data:text/csv;charset=utf-8,";
+            rows.forEach(function(rowArray) {
+                row = rowArray.join(",");
+                csvContent += row + "\r\n";
+            });
+
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "Faculty_Feedback.csv");
+            document.body.appendChild(link);
+            link.click();
             </script>
 </body>
 
