@@ -3,9 +3,9 @@ session_start();
 include "config.php";
 
 if (isset($_SESSION['login_user_admin'])) {
-    $userID = $_POST['fId'];
+    $userID = $_POST['sid'];
     if(isset($_POST['delete'])){
-        $Query = "select * from users where u_id='$userID'";
+        $Query = "select * from students where s_id='$userID'";
         $Result = mysqli_query($con, $Query);
         $count = mysqli_num_rows($Result);
 
@@ -17,14 +17,14 @@ if (isset($_SESSION['login_user_admin'])) {
                                     Swal.fire({
                                         icon: \'error\',
                                 title: \'Oops...\',
-                                text: \'Incorrect faculty ID!\',
+                                text: \'Incorrect Student ID!\',
                                 })
                                 };
                             </script>';
         echo '<meta http-equiv="refresh" content="1.5; URL=\'manageUsers.php\'" />';
 
         }else{
-            $vQuery = "delete FROM users WHERE u_id='$userID'";
+            $vQuery = "delete FROM students WHERE s_id='$userID'";
                 $Result = mysqli_query($con, $vQuery);
                     if ($Result!=NULL) {
                         echo '<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
@@ -34,7 +34,7 @@ if (isset($_SESSION['login_user_admin'])) {
                                         Swal.fire({
                                             icon: \'success\',
                                     title: \'Deleted\',
-                                    text: \'Faculty was deleted successfully!\',
+                                    text: \'Student was deleted successfully!\',
                                     })
                                     };
                                 </script>';
@@ -43,61 +43,27 @@ if (isset($_SESSION['login_user_admin'])) {
                     }
                 }
         }
+    else{
 
-    $vQuery = "select * from faculty_feedback where f_id='$userID'";
+    $vQuery = "select * from students where s_id='$userID'";
     $vResult = mysqli_query($con, $vQuery);
     $vRow = mysqli_fetch_array($vResult);
     $count = mysqli_num_rows($vResult);
 
-    
-
     if ($count >= 1) {
 
-        $query2 = "select * from users where u_id='$userID'";
-        $result2 = mysqli_query($con, $query2);
-        $row2 = mysqli_fetch_array($result2);
-        $name = ($row2['u_name']);
-
-        $queryq3 = "select avg(q3) from faculty_feedback where f_id='$userID'";
-        $resultq3 = mysqli_query($con, $queryq3);
-        $rowq3 = mysqli_fetch_array($resultq3);
-        $avgq3 = (round($rowq3['avg(q3)'])) * 2;
-
-        $queryq6 = "select avg(q6) from faculty_feedback where f_id='$userID'";
-        $resultq6 = mysqli_query($con, $queryq6);
-        $rowq6 = mysqli_fetch_array($resultq6);
-        $avgq6 = (round($rowq6['avg(q6)'])) * 2;
-
-        $queryq7 = "select avg(q7) from faculty_feedback where f_id='$userID'";
-        $resultq7 = mysqli_query($con, $queryq7);
-        $rowq7 = mysqli_fetch_array($resultq7);
-        $avgq7 = (round($rowq7['avg(q7)'])) * 2;
-
-        $queryq8 = "select avg(q8) from faculty_feedback where f_id='$userID'";
-        $resultq8 = mysqli_query($con, $queryq8);
-        $rowq8 = mysqli_fetch_array($resultq8);
-        $avgq8 = (round($rowq8['avg(q8)'])) * 2;
-        
-        $queryq9 = "select avg(q9) from faculty_feedback where f_id='$userID'";
-        $resultq9 = mysqli_query($con, $queryq9);
-        $rowq9 = mysqli_fetch_array($resultq9);
-        $avgq9 = (round($rowq9['avg(q9)'])) * 2;
-
-        $lm = 6;
-        $cm = 8;
-
-        $overall = ($avgq3+$avgq6+$avgq7+$avgq8+$avgq9)*2;
-
-        $overall = ($overall);
-
-        if ($overall >= 90) {
-            $pgbcolor = "success";
-        } elseif ($overall >= 60) {
-            $pgbcolor = "warning";
-        } else {
-            $pgbcolor = "danger";
-        }
-
+        $name=$vRow['s_name'];
+        $c_id=$vRow['c_id'];
+        $phone = 93456789788;
+        $email = "naveenkumar12@gmail.com";
+        $fname = "Lokesh Kumari";
+        $mname = "Saukalya Kumar";
+        $dob = "27/05/21";
+        $doa = "02/05/21";
+        $nation = "Indian";
+        $state = "Karnataka";
+        $batch = "CA18";
+        $sec = "A";
 ?>
 
 
@@ -351,7 +317,7 @@ if (isset($_SESSION['login_user_admin'])) {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="alumni.php">
+                            <a class="nav-link" href="alumni.php">
                                 <span data-feather="bar-chart-2"></span>
                                 Alumni
                             </a>
@@ -387,7 +353,7 @@ if (isset($_SESSION['login_user_admin'])) {
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="manageUsers.php">
+                            <a class="nav-link active" href="manageUsers.php">
                                 <span data-feather="layers"></span>
                                 Manage Users
                             </a>
@@ -413,7 +379,7 @@ if (isset($_SESSION['login_user_admin'])) {
                                         class="rounded-circle" width="150">
                                     <div class="mt-3">
                                         <h4><?php echo "$name"; ?></h4>
-                                        <p class="text-muted font-size-sm">Faculty Id: <?php echo "$userID"; ?></p>
+                                        <p class="text-muted font-size-sm">Course Id : <?php echo "$c_id"; ?></p>
                                         
                                     </div>
                                 </div>
@@ -422,190 +388,125 @@ if (isset($_SESSION['login_user_admin'])) {
 
                     </div>
                     <div class="col-md-8">
-
-                        <div class="row gutters-sm">
-                            <div class="col-sm-6 mb-3">
-                                <div class="card h-100">
-                                    <div class="card-body">
-                                        <h6 class="d-flex align-items-center mb-3"><i
-                                                class="material-icons text-info mr-2"></i>Subject-wise analyisis
-                                        </h6>
-                                        <?php 
-                                        $sub="select * from subjects where f_id='$userID'";
-                                        $subRes = mysqli_query($con,$sub);
-                                        while($subRow=mysqli_fetch_array($subRes)){
-                                            $prgrs = "select avg(q9) from faculty_feedback where s_id='$userID'";
-                                            $prgrsRes = mysqli_query($con, $queryq9);
-                                            $prgrsRow = mysqli_fetch_array($resultq9);
-                                            echo'
-                                            <small>'.$subRow['sub_name'].'</small>
-                                        <div class="progress mb-3" style="height: 5px">
-                                            <div class="progress-bar bg-primary" role="progressbar" style="width: '.$prgrs.'"
-                                                 aria-valuemin="0" aria-valuemax="100">
-                                            </div>
-                                        </div>
-                                            ';
-                                        }
-                                        ?>
-                                    
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Full Name :</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <?php echo "$name"; ?>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 mb-3">
-                                <div class="card h-100">
-                                    <div class="card-body">
-                                        <h5 class="card-title text-center"><b>Overall Performance</b></h5>
-                                        <div class="progress mb-3" style="height: 15px">
-                                            <div class="progress-bar bg-<?php echo "$pgbcolor"; ?>" role="progressbar"
-                                                style="width: <?php echo "$overall"; ?>%">
-                                            </div>
-                                        </div>
-                                        <p class="card-text">Here is your monthly performance summary</p>
-                                        <p class="card-text"><b>Communication</b></p>
-                                        <div class="progress mb-3" style="height: 8px">
-                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 60%"
-                                                aria-valuenow="<?php echo "$avg" ?>" aria-valuemin="0"
-                                                aria-valuemax="100">
-                                            </div>
-                                        </div>
-                                        <p class="card-text"><b>Teaching</b></p>
-                                        <div class="progress mb-3" style="height: 8px">
-                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 70%"
-                                                aria-valuenow="<?php echo "$avg" ?>" aria-valuemin="0"
-                                                aria-valuemax="100">
-                                            </div>
-                                        </div>
-                                        <p class="card-text"><b>Attitude</b></p>
-                                        <div class="progress mb-3" style="height: 8px">
-                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 70%"
-                                                aria-valuenow="<?php echo "$avg" ?>" aria-valuemin="0"
-                                                aria-valuemax="100">
-                                            </div>
-                                        </div>
-                                        <a href="#viewMore" class="btn btn-primary">
-                                            View More
-                                        </a>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">ID :</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <?php echo "$userID"; ?>
                                     </div>
                                 </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Email :</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <?php echo "$email"; ?>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Phone :</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <?php echo "$phone"; ?>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Father's Name :</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <?php echo "$fname"; ?>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Mother's Name :</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <?php echo "$mname"; ?>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Date Of Birth :</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <?php echo "$dob"; ?>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Date of admission :</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <?php echo "$doa"; ?>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Nationality :</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <?php echo "$nation"; ?>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">State :</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <?php echo "$state"; ?>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Batch :</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <?php echo "$batch"; ?>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Section :</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <?php echo "$sec"; ?>
+                                    </div>
+                                </div>
+                                <hr>
                             </div>
-
-
                         </div>
-
-
-
                     </div>
+                    </div> 
                 </div>
-
-                <br><br><br>
-                <center class="bg-light" id="viewMore">
-                    <div
-                        class=" d-flex justify-content-center flex-wrap flex-md-nowrap align-it ems-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">
-                            Performance Analysis
-                        </h1>
-                        <div class="btn-toolbar mb-2 mb-md-0">
-                            <div class="btn-group mr-2">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container">
-                        <canvas id="myChart1" style="width:100%;max-width:600px"></canvas>
-                    </div>
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                        <div class="btn-group mr-2">
-                        </div>
-                    </div>
-                    <div
-                        class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">
-
-                        </h1>
-                        <div class="btn-toolbar mb-2 mb-md-0">
-                            <div class="btn-group mr-2">
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">
-                            Overall Analysis
-                        </h1>
-                        <div class="btn-toolbar mb-2 mb-md-0">
-                            <div class="btn-group mr-2">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container">
-                        <canvas id="myChart2" style="width:100%;max-width:600px"></canvas>
-                    </div>
-                    <br><br><br>
-                </center>
-
-
-                <br><br>
-                </form>
-        </div>
+            </div>
         </main>
         <br>
         <br>
-
-        <script>
-        var xValues = ["Communication", "Teaching", "Attitude", "Exam Patterns", "Resourses"];
-        var yValues = [<?php echo "$avgq8" ?>, <?php echo "$avgq9" ?>, <?php echo "$avgq3" ?>,
-            <?php echo "$avgq6" ?>,
-            <?php echo "$avgq7" ?>
-        ];
-        var barColors = [
-            "#b91d47",
-            "#00aba9",
-            "#2b5797",
-            "#e8c3b9",
-            "#1e7145"
-        ];
-
-        new Chart("myChart1", {
-            type: "doughnut",
-            data: {
-                labels: xValues,
-                datasets: [{
-                    backgroundColor: barColors,
-                    data: yValues
-                }]
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: ""
-                }
-            }
-        });
-
-
-        var xValues = ["Overall"];
-        var yValues = [5];
-        var barColors = ["red", "green", "blue", "orange", "brown"];
-
-        new Chart("myChart2", {
-            type: "bar",
-            data: {
-                labels: xValues,
-                datasets: [{
-                    backgroundColor: barColors,
-                    data: yValues
-                }]
-            },
-            options: {
-                legend: {
-                    display: false
-                },
-                title: {
-                    display: true,
-                    text: ""
-                }
-            }
-        });
-        </script>
 
 
 </body>
@@ -621,12 +522,13 @@ if (isset($_SESSION['login_user_admin'])) {
                         Swal.fire({
                             icon: \'error\',
                     title: \'Oops...\',
-                    text: \'Incorrect Faculty ID!\',
+                    text: \'Incorrect Student ID!\',
                     })
                     };
                 </script>';
-        echo '<meta http-equiv="refresh" content="1.5; URL=\'viewfacfeed.php\'" />';
+        echo '<meta http-equiv="refresh" content="1.5; URL=\'manageUsers.php\'" />';
     }
+}
 } else {
     echo "<script>location.href='adminlogin.php'</script>";
 }

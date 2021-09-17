@@ -67,6 +67,65 @@ if (isset($_SESSION['login_user_faculty'])) {
     } else {
         $pgbcolor = "danger";
     }
+
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $message = $_POST['message'];
+            $userID = $_SESSION['login_user_faculty'];
+
+            if ($message != null) {
+
+                $sql = "insert into admin_notifications(u_id,u_message) values('$userID','$message')";
+                $result = mysqli_query($con, $sql);
+
+                if (!$result) {
+                    echo '<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
+                        </script><script>window.onload=function swal() {
+                    Swal.fire( {
+                            icon: \'error\',
+                            title: \'Oops...\',
+                            text: \'An error occured\',
+                        }
+
+                    )
+                }
+
+                ;
+                </script>';
+                    echo '<meta http-equiv="refresh" content="1.5; URL=\'facultydash.php\'" />';
+                } else {
+                    echo '<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
+                        </script><script>window.onload=function swal() {
+                    Swal.fire( {
+                            icon: \'success\',
+                            title: \'Sent\',
+                            text: \'Message Sent Successfully !\',
+                        }
+
+                    )
+                }
+
+                ;
+                </script>';
+                    echo '<meta http-equiv="refresh" content="1.5; URL=\'facultydash.php\'" />';
+                }
+            } else {
+                echo '<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
+                        </script><script>window.onload=function swal() {
+                    Swal.fire( {
+                            icon: \'error\',
+                            title: \'\',
+                            text: \'An empty message, can cause problems\',
+                        }
+
+                    )
+                }
+
+                ;
+                </script>';
+                echo '<meta http-equiv="refresh" content="1.5; URL=\'facultydash.php\'" />';
+            }
+        }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -96,79 +155,24 @@ if (isset($_SESSION['login_user_faculty'])) {
 
     a {
         text-decoration: none;
+        color:black;
     }
 
     a:hover {
-        background-color: rgb(95, 95, 95);
+        background-color: #e2e8f0;
 
         border-radius: 4px;
         text-decoration: none;
 
     }
 
-    #head:hover {
-        background-color: black;
-    }
-
     body {
-        margin-top: 20px;
         color: #1a202c;
-        text-align: left;
         background-color: #e2e8f0;
-    }
-
-    .main-body {
-        padding: 15px;
     }
 
     .card {
         box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
-    }
-
-    .card {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        min-width: 0;
-        word-wrap: break-word;
-        background-color: #fff;
-        background-clip: border-box;
-        border: 0 solid rgba(0, 0, 0, .125);
-        border-radius: .25rem;
-    }
-
-    .card-body {
-        flex: 1 1 auto;
-        min-height: 1px;
-        padding: 1rem;
-    }
-
-    .gutters-sm {
-        margin-right: -8px;
-        margin-left: -8px;
-    }
-
-    .gutters-sm>.col,
-    .gutters-sm>[class*=col-] {
-        padding-right: 8px;
-        padding-left: 8px;
-    }
-
-    .mb-3,
-    .my-3 {
-        margin-bottom: 1rem !important;
-    }
-
-    .bg-gray-300 {
-        background-color: #e2e8f0;
-    }
-
-    .h-100 {
-        height: 100% !important;
-    }
-
-    .shadow-none {
-        box-shadow: none !important;
     }
 
     #messageLink:hover {
@@ -177,35 +181,37 @@ if (isset($_SESSION['login_user_faculty'])) {
         color: white;
 
     }
+
+    #head{
+        box-shadow:0px 0px 5px 1px grey;
+    }
     </style>
 
-    <title>Student Dashboard</title>
+    <title>Faculty Dashboard</title>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="head"><a class="navbar-brand" href="facultydash.php">
-            <h2>Faculty Dashboard</h2>
-        </a>
+<nav class="navbar navbar-expand-lg navbar bg-light text-dark" id="head">
+            <img src="images/headLogo.png" class="img-fluid" width=150 height=100 alt="alvas">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 
         </div>
         </div>
-        <ul class="navbar-nav px-3">
-            <div class="navbar-nav"><a class="nav-link active" href="home.html">Home <span
-                        class="sr-only">(current)</span></a><a class="nav-link active" href="#">Help</a>
+        <ul class="navbar-nav px-3" style="font-weight:bold;">
+            <div class="navbar-nav"><a class="nav-link active" href="#">Home <span
+                        class="sr-only">(current)</span></a><a class="nav-link active" href="home.html">Help</a>
                 <a class="nav-link active" href="#">About</a>
                 <a class="nav-link active" href="contact.html">Contact Us</a>
                 <li class="nav-item text-nowrap"><a class="nav-link" id="signinbtn" href="logout.php">Sign out <i
                             class="bi bi-arrow-right-circle-fill"></i></a></li>
         </ul>
     </nav>
+    <br><br>
     <div class="container">
         <div class="main-body">
-
-            <!-- Breadcrumb -->
-            <nav aria-label="breadcrumb" class="main-breadcrumb">
-            </nav>
-            <!-- /Breadcrumb -->
 
             <div class="row gutters-sm">
                 <div class="col-md-4 mb-3">
@@ -218,12 +224,7 @@ if (isset($_SESSION['login_user_faculty'])) {
                                     <h4><?php echo "$name"; ?></h4>
                                     <p class="text-secondary mb-1">Deptartment : CSE</p>
                                     <p class="text-muted font-size-sm">Department Id: <?php echo "$dId"; ?></p>
-                                    <a href="#message" class="btn btn-outline-primary">
-                                        Message</a>
-                                    <a href="#notifications" class="btn btn-outline-primary">
-                                        Notifications <sup><span
-                                                class="badge badge-danger"><?php echo "$notify"; ?></span></sup>
-                                    </a>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -382,25 +383,9 @@ if (isset($_SESSION['login_user_faculty'])) {
                 </div>
             </div>
         </div>
-        <div
-            class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">
-                Monthly Analysis
-            </h1>
-            <div class="btn-toolbar mb-2 mb-md-0">
-                <div class="btn-group mr-2">
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <canvas id="myChart2" style="width:100%;max-width:600px"></canvas>
-        </div>
-
     </center>
-    <div class="btn-toolbar mb-2 mb-md-0" id="message" id="message">
-        <div class="btn-group mr-2">
-        </div>
-    </div>
+
+
     <div
         class="d-flex bg-light justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">
@@ -411,91 +396,8 @@ if (isset($_SESSION['login_user_faculty'])) {
             </div>
         </div>
     </div>
-    <div class="bg-light">
-        <div
-            class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">
-                Message
-            </h1>
-            <div class="btn-toolbar mb-2 mb-md-0">
-                <div class="btn-group mr-2">
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <form class="justify-content-center align-items-center">
-                <div class="form-group">
-                    <textarea type="text" class="form-control" aria-describedby="message" rows="10" cols="5"></textarea>
-                    <small id="emailHelp" class="form-text text-muted"></small>
-                </div>
-                <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3
-                border-bottom">
-                    <button type="submit" class="btn btn-primary ">Send Message</button>
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                        <div class="btn-group mr-2">
-                        </div>
-                    </div>
-                </div>
-
-                <br><br>
-            </form>
-        </div>
-    </div>
-    <div class="btn-toolbar mb-2 mb-md-0">
-        <div class="btn-group mr-2">
-        </div>
-    </div>
-    <div
-        class="d-flex bg-light justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">
-
-        </h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <div class="btn-group mr-2">
-            </div>
-        </div>
-    </div>
-    <div class="bg-light" id="notifications">
-        <div
-            class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">
-                Notifications
-            </h1>
-            <div class="btn-toolbar mb-2 mb-md-0">
-                <div class="btn-group mr-2">
-                </div>
-            </div>
-        </div>
         <center>
-            <div class="container">
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action active">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">Here is your anual report</h5>
-                            <small>2 days ago</small>
-                        </div>
-                        <p class="mb-1">This report is generated based on your previous year performance.</p>
-                        <small>a copy has also been sent to your e-mail account.</small>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">Important : </h5>
-                            <small class="text-muted">3 days ago</small>
-                        </div>
-                        <p class="mb-1">16/08/21 is the last date of submission of example form</p>
-                        <small class="text-muted">This is an important message!</small>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action bg-warning">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">Performance Alert</h5>
-                            <small class="text-muted">4 days ago</small>
-                        </div>
-                        <p class="mb-1">Your performance in the subject code JAVABCA3A has to be improved</p>
-                        <small class="text-muted">Look into the detailed analysis</small>
-                    </a>
-                    <br>
-                </div>
-            </div>
+
             <br><br>
         </center>
     </div>

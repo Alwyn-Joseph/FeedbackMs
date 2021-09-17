@@ -1,3 +1,40 @@
+<?php
+include("config.php");
+session_start();
+if (isset($_SESSION['login_user_alumni'])) {
+    header("location: alumniForm.php");
+
+}
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id = mysqli_real_escape_string($con, $_POST['id']);
+    $password = md5(mysqli_real_escape_string($con, $_POST['pwd']));
+
+
+    $sql = "SELECT s_id FROM students WHERE s_id = '$id' and password = '$password'";
+    $result = mysqli_query($con, $sql);
+    $row = mysqli_fetch_array($result);
+    $count = mysqli_num_rows($result);
+
+                    if ($count == 1) {
+                        $_SESSION['login_user_alumni'] = $id;
+                        header("location: alumniForm.php");
+                    } else {
+                        echo '<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
+                        </script>
+                        <script>
+                            window.onload = function swal() {
+                                Swal.fire({
+                                    icon: \'error\',
+                            title: \'Oops...\',
+                            text: \'Incorrect Credentials!\',
+                    })
+                            };
+                        </script>';
+                    }
+                }
+        ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,13 +55,13 @@
         </div>
 
         <div class="container">
-            <label for="uname"><b>Username</b></label>
-            <input type="text" name="uname" placeholder="Enter Username" required>
+            <label for="uname"><b>USN</b></label>
+            <input type="text" name="id" placeholder="Enter USN" required>
 
             <label for="psw"><b>Password</b></label>
-            <input type="password" name="psw" placeholder="Enter Password" required>
+            <input type="password" name="pwd" placeholder="Enter Password" required>
 
-            <button type=""><a href="alumnifeedback.php">Login</a></button>
+            <button type="submit" name="submit">Login</button>
 
         </div>
         <div class="homeImgBox">

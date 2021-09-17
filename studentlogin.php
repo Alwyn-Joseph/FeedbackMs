@@ -1,17 +1,16 @@
 <?php
 include("config.php");
+session_start();
 if (isset($_SESSION['login_user_student'])) {
     header("location: studentdash.php");
 }
-session_start();
-
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = mysqli_real_escape_string($con, $_POST['id']);
     $password = md5(mysqli_real_escape_string($con, $_POST['pwd']));
 
 
-    $sql = "SELECT s_id FROM students WHERE s_id = '$id' and password = '$password'";
+    $sql = "SELECT * FROM users WHERE u_id = '$id' and u_pass = '$password' and u_type='student'";
     $result = mysqli_query($con, $sql);
     $row = mysqli_fetch_array($result);
     $count = mysqli_num_rows($result);

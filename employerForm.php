@@ -2,49 +2,38 @@
 include "config.php";
 session_start();
 
-if (isset($_SESSION['login_user_student'])) {
+if (isset($_SESSION['login_user_employer'])) {
 
-    $userId = $_SESSION['login_user_student'];
-
-    $query1 = "select * from students where s_id='$userId'";
-    $result1 = mysqli_query($con, $query1);
-    $row1 = mysqli_fetch_array($result1);
-    $cId = $row1['c_id'];
-
-    $query2 = "select * from subjects where c_id='$cId'";
-    $result2 = mysqli_query($con, $query2);
-    $row2 = mysqli_fetch_array($result2);
-    $fId = $row2['f_id'];
-
-    $query3 = "select * from faculty where f_id='$fId'";
-    $result3 = mysqli_query($con, $query3);
-    $row3 = mysqli_fetch_array($result3);
-    $facName = $row3['f_name'];
-
+    $userId = $_SESSION['login_user_employer'];
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $s_id = $userId;
+        $e_mail = $userId;
+        $q = "select * from employer where e_mail='$e_mail' limit 1";
+        $r = mysqli_query($con, $q);
+        $f = mysqli_fetch_array($r);
+        $e_id = $f['e_id'];
+        $e_name = $f['e_name'];
         
-        $q1 = $_POST['127'];
-        $q2 = $_POST['128'];
-        $q3 = $_POST['129'];
-        $q4 = $_POST['130'];
-        $q5 = $_POST['131'];
-        $q6 = $_POST['132'];
-        $q7 = $_POST['133'];
-        $q8 = $_POST['134'];
-        $q9 = $_POST['135'];
-        $q10 = $_POST['136'];
-        $q11 = $_POST['137'];
-        $q12 = $_POST['138'];
-        $q13 = $_POST['139'];
-        $q14 = $_POST['140'];
-        $q15 = $_POST['141'];
-        $q16 = $_POST['142'];
-        $q17 = $_POST['143'];
-        $cmnts = $_POST['comments'];
+        $q1 = $_POST['144'];
+        $q2 = $_POST['145'];
+        $q3 = $_POST['146'];
+        $q4 = $_POST['147'];
+        $q5 = $_POST['148'];
+        $q6 = $_POST['149'];
+        $q7 = $_POST['150'];
+        $q8 = $_POST['151'];
+        $q9 = $_POST['152'];
+        $q10 = $_POST['153'];
+        $q11 = $_POST['154'];
+        $q12 = $_POST['155'];
+        $q13 = $_POST['156'];
+        $q14 = $_POST['157'];
+        $q15 = $_POST['158'];
+        $q16 = $_POST['inlineRadioOptions'];
+        $cmnt1 = $_POST['cmnt1'];
+        $cmnt2 = $_POST['cmnt2'];
 
-        $sql = "insert into facilities_feedback(s_id,q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13,q14,q15,q16,q17,cmnt) values('$s_id','$q1','$q2','$q3','$q4','$q5','$q6','$q7','$q8','$q9','$q10','$q11','$q12','$q13','$q14','$q15','$q16','$q17','$cmnts')";
+        $sql = "insert into employer_feedback(e_id,e_name,q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13,q14,q15,q16,cmnt1,cmnt2) values('$e_id','$e_name','$q1','$q2','$q3','$q4','$q5','$q6','$q7','$q8','$q9','$q10','$q11','$q12','$q13','$q14','$q15','$q16','$cmnt1','$cmnt2')";
         $result = mysqli_query($con, $sql);
 
             if (!$result) {
@@ -59,6 +48,7 @@ if (isset($_SESSION['login_user_student'])) {
                         })
                         };
                     </script>';
+                    echo '<meta http-equiv="refresh" content="1.5; URL=\'employerForm.php\'" />';
             } else {
                 echo '<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
                     </script>
@@ -71,7 +61,7 @@ if (isset($_SESSION['login_user_student'])) {
                         })
                         };
                     </script>';
-                    echo '<meta http-equiv="refresh" content="1.5; URL=\'studentdash.php\'" />';
+                    echo '<meta http-equiv="refresh" content="1.5; URL=\'employerForm.php\'" />';
             }
     }
 ?>
@@ -87,7 +77,7 @@ if (isset($_SESSION['login_user_student'])) {
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.72.0">
-    <title>Facility | Provide Your Feedback</title>
+    <title>Employer | Provide Your Feedback</title>
 
     <link rel="canonical" href="https://v5.getbootstrap.com/docs/5.0/examples/dashboard/">
 
@@ -183,10 +173,11 @@ if (isset($_SESSION['login_user_student'])) {
 </head>
 
 <body>
+    
     <div class="mb-3" id="title">
         <center>
-            <h1 class="display-4 text-white">Facility Feedback Form</h1>
-            <small class="text-light">Feedback provided about facilities</small>
+            <h1 class="display-4 text-white">Employer Feedback Form</h1>
+            <small class="text-white">Feedback provided by Employers</small>
             <br><br>
         </center>
     </div>
@@ -194,29 +185,21 @@ if (isset($_SESSION['login_user_student'])) {
     <form method="post" action="">
         <div class="mb-3">
             <p class="">
-                This questionnaire is to collect information relating to your satisfaction towards facilities and
-                services provided for
-                creating conducive atmosphere for teaching and learning. The information provided by you will be kept
-                confidential and
-                will be used as important feedback for quality improvement of the programme of studies/institution.
-                <br>
-                <b>Directions:</b><br>
-                For each item please indicate your level of satisfaction with the following statement by choosing a
-                scorebetween 1 and 5. <br>
-                <b>(1 – strongly disagree, 2 - disagree, 3 – not sure, 4 – agree, 5 – strongly agree)</b>
+                <b>Dear Employer,</b><br>
+                Many graduates of our Department/College/Institution are already working in your organization. We
+                are
+                thankful to you
+                for providing them employment with your prestigious Company/Organization.
+                We shall very much appreciate and be grateful to you if you can spare some of your valuable time to
+                fill up this feedback form. 
+                <br>It will help us to improve the Institution further and give you better employees in
+                future.
                 <br><br>
             </p>
             <b>
-                <label class="form-label">ID(Student ID):</label>
-                <div class="form-group mb-2">
-                    <input class="form-control-plaintext" type="text" name="studentid"
-                        style="border-color:grey;  border-style: solid;padding:10px" readonly
-                        value="<?php echo $userId; ?>" required>
-                </div>
-            </b>
-            <br>
-                <?php
-                    $query4 = "select * from questions where f_id='FM102'";
+
+            <?php
+                    $query4 = "select * from questions where f_id='FM103'";
                     $result4 = mysqli_query($con, $query4);
                         while ($row4 = mysqli_fetch_array($result4)) {
                             echo '<div class="container text-center" id="qsnbx">
@@ -260,30 +243,94 @@ if (isset($_SESSION['login_user_student'])) {
                         }
                     ?>
 
-        <br>
-        <div>
-            <label class="form-label">Any other comments
+<div class="container text-center" id="qsnbx">
+<br>
+            <label class="form-label">On a scale of 1 to 10 how do you rate your overall satisfaction with AIET students
+                and
+                the curriculum?
             </label>
             <br>
-            <textarea class="form-control" type="text" name="comments" id="" rows="5" required></textarea>
+            
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                    value="1" required>
+                <label class="form-check-label" for="inlineRadio1">1</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                    value="2">
+                <label class="form-check-label" for="inlineRadio1">2</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                    value="3">
+                <label class="form-check-label" for="inlineRadio1">3</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                    value="4">
+                <label class="form-check-label" for="inlineRadio1">4</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                    value="5">
+                <label class="form-check-label" for="inlineRadio2">5</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                    value="6">
+                <label class="form-check-label" for="inlineRadio2">6</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                    value="7">
+                <label class="form-check-label" for="inlineRadio2">7</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                    value="8">
+                <label class="form-check-label" for="inlineRadio2">8</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                    value="9">
+                <label class="form-check-label" for="inlineRadio2">9</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                    value="10">
+                <label class="form-check-label" for="inlineRadio2">10</label>
+            </div>
+<br><br>
+            </div>
+        <br>
+        <div>
+            <label class="form-label">If you were dissatisfied with any aspect, please comment further:
+            </label>
+            <br>
+            <textarea class="form-control" type="text" name="cmnt1" id="" rows="5" required></textarea>
         </div>
         <br>
+        <div>
+            <label class="form-label">How could our programs be improved? What specific comments do you have regarding
+                the curriculum?
+            </label>
+            <br>
+            <textarea class="form-control" type="text" name="cmnt2" id="" rows="5" required></textarea>
+        </div>
+        </b>
         <br>
         <br>
         <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+        <a class="btn btn-danger" href="logout.php" id="submit">Cancel</a>
+
     </form>
 </body>
 <script>
 </script>
 
 </html>
-
-<body>
-
-</body>
-
-</html>
 <?php
 }else{
-    echo '<meta http-equiv="refresh" content="1.5; URL=\'studentlogin.php\'" />';
+    echo '<meta http-equiv="refresh" content="1.5; URL=\'employerlogin.php\'" />';
 }

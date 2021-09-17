@@ -29,27 +29,36 @@ $userId = $_SESSION['login_user_student'];
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $s_id = $userId;
-        $q1 = $_POST['flexRadioDefault1'];
-        $q2 = $_POST['flexRadioDefault2'];
-        $q3 = $_POST['flexRadioDefault3'];
-        $q4 = $_POST['flexRadioDefault4'];
-        $q5 = $_POST['flexRadioDefault5'];
-        $q6 = $_POST['flexRadioDefault6'];
-        $q7 = $_POST['flexRadioDefault7'];
-        $q8 = $_POST['flexRadioDefault8'];
-        $q9 = $_POST['flexRadioDefault9'];
-        $q10 = $_POST['flexRadioDefault10'];
-        $q11 = $_POST['flexRadioDefault11'];
-        $q12 = $_POST['flexRadioDefault12'];
-        $q13 = $_POST['flexRadioDefault13'];
-        $q14 = $_POST['flexRadioDefault14'];
-        $q15 = $_POST['flexRadioDefault15'];
-        $q16 = $_POST['flexRadioDefault16'];
-        $q17 = $_POST['flexRadioDefault17'];
-        $q18 = $_POST['flexRadioDefault17'];
+        $f_id = $_POST['subjects'];
+
+        
+        $fNameQuery = "select f_name from faculty where f_id = '$f_id'";
+        $fNameResult = mysqli_query($con, $fNameQuery);
+        $row = mysqli_fetch_array($fNameResult);
+        $f_name = $row['f_name'];
+
+
+        $q1 = $_POST['101'];
+        $q2 = $_POST['102'];
+        $q3 = $_POST['103'];
+        $q4 = $_POST['104'];
+        $q5 = $_POST['105'];
+        $q6 = $_POST['106'];
+        $q7 = $_POST['107'];
+        $q8 = $_POST['108'];
+        $q9 = $_POST['109'];
+        $q10 = $_POST['110'];
+        $q11 = $_POST['111'];
+        $q12 = $_POST['112'];
+        $q13 = $_POST['113'];
+        $q14 = $_POST['114'];
+        $q15 = $_POST['115'];
+        $q16 = $_POST['116'];
+        $q17 = $_POST['117'];
+        $q18 = $_POST['118'];
         $cmnts = $_POST['comments'];
 
-        $sql = "insert into facOnFacility_feedback(f_id,s_id,q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13,q14,q15,q16,q17,cmnt) values('$f_id','$s_id','$q1','$q2','$q3','$q4','$q5','$q6','$q7','$q8','$q9','$q10','$q11','$q12','$q13','$q14','$q15','$q16','$q17','$cmnts')";
+        $sql = "insert into faculty_feedback(f_id,f_name,s_id,q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13,q14,q15,q16,q17,cmnt) values('$f_id','$f_name','$s_id','$q1','$q2','$q3','$q4','$q5','$q6','$q7','$q8','$q9','$q10','$q11','$q12','$q13','$q14','$q15','$q16','$q17','$cmnts')";
         $result = mysqli_query($con, $sql);
 
         if (!$result) {

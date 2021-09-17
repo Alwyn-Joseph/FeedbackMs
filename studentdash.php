@@ -24,17 +24,18 @@ if (isset($_SESSION['login_user_student'])) {
     <style>
     * {
         font-family: 'Ubuntu', sans-serif;
+        overflow:hidden;
     }
 
     a:hover {
-        background-color: rgb(95, 95, 95);
+        background-color: #f7f7f7;
 
         border-radius: 4px;
 
     }
 
-    #head:hover {
-        background-color: black;
+    #head{
+        box-shadow:0px 0px 5px 1px grey;
     }
     </style>
 
@@ -42,16 +43,16 @@ if (isset($_SESSION['login_user_student'])) {
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="head"><a class="navbar-brand" href="#">
-            <h2>Student Dashboard</h2>
-        </a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+    <nav class="navbar navbar-expand-lg navbar-light" id="head">
+            <img src="images/headLogo.png" class="img-fluid" width=150 height=100 alt="alvas">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"><span
                 class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 
         </div>
         </div>
-        <ul class="navbar-nav px-3">
+        <ul class="navbar-nav px-3" style="font-weight:bold;">
             <div class="navbar-nav"><a class="nav-link active" href="#">Home <span
                         class="sr-only">(current)</span></a><a class="nav-link active" href="home.html">Help</a>
                 <a class="nav-link active" href="#">About</a>
@@ -61,8 +62,8 @@ if (isset($_SESSION['login_user_student'])) {
         </ul>
     </nav><br>
     <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">
-            Feedbacks
+        <h1>
+            <b>Feedbacks</b>
         </h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">
@@ -70,47 +71,35 @@ if (isset($_SESSION['login_user_student'])) {
         </div>
     </div>
     <br><br>
-    <div class="row text-center">
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Faculty Feedback</h5>
-                    <p class="card-text">Provide feedbacks about your faculties.</p><a href="yoursubjects.php"
-                        class="btn btn-primary">Give Feedback</a>
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Faculty Feedback</h5>
+                        <p class="card-text">Provide feedbacks about your faculties.</p><a href="facultyForm.php"
+                            class="btn btn-primary">Give Feedback</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Facility Feedback</h5>
+                        <p class="card-text">Provide feedbacks about the facilities provided by the organisation</p><a
+                            href="FaciltyForm.php" class="btn btn-primary">Give Feedback</a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Facility Feedback</h5>
-                    <p class="card-text">Provide feedbacks about the facilities provided by the organisation</p><a
-                        href="FaciltyForm.php" class="btn btn-primary">Give Feedback</a>
-                </div>
+        
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
             </div>
         </div>
     </div>
     <br>
-    <div class="row text-center">
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Course Feedback</h5>
-                    <p class="card-text">Provide feedbacks about your Course.</p><a href="#"
-                        class="btn btn-primary">Give Feedback</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Department Feedback</h5>
-                    <p class="card-text">Provide feedbacks about the Department you are associated with.</p><a href="#"
-                        class="btn btn-primary">Give Feedback</a>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </body>
 
 </html>

@@ -1,7 +1,7 @@
 <?php
 session_start();
-
-if (isset($_SESSION['login_user'])) {
+include "config.php";
+if (isset($_SESSION['login_user_admin'])) {
 ?>
 
 </html>
@@ -15,7 +15,7 @@ if (isset($_SESSION['login_user'])) {
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.72.0">
-    <title>Dashboard Template · Bootstrap</title>
+    <title>Admin | Alumni</title>
 
     <link rel="canonical" href="https://v5.getbootstrap.com/docs/5.0/examples/dashboard/">
 
@@ -29,6 +29,8 @@ if (isset($_SESSION['login_user'])) {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
         integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous">
     </script>
+
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
 
     <style>
     .nav-link:hover {
@@ -163,6 +165,17 @@ if (isset($_SESSION['login_user'])) {
     #signinbtn:hover {
         background-color: #343a40;
     }
+
+    a {
+        text-decoration: none;
+    }
+
+    td,
+    tr {
+        text-align: center;
+    }
+
+    
     </style>
 </head>
 
@@ -170,19 +183,12 @@ if (isset($_SESSION['login_user'])) {
 
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
         <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#"><img src="images/Logo.png" width="30" alt="alvas">
-            Alva's
             Feedback System</a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
             data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-        <ul class="navbar-nav px-3">
-            <li class="nav-item text-nowrap">
-                <a class="nav-link" id="signinbtn" href="logout.php">Sign out <i
-                        class="bi bi-arrow-right-circle-fill"></i></a>
-            </li>
-        </ul>
+  
     </nav>
 
     <div class="container-fluid">
@@ -190,12 +196,7 @@ if (isset($_SESSION['login_user'])) {
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" id="dash" aria-current="page" href="admindashboard.php">
-                                <span data-feather="home"></span>
-                                Dashboard
-                            </a>
-                        </li>
+
                         <h6
                             class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                             <span>Feedbacks</span>
@@ -212,7 +213,7 @@ if (isset($_SESSION['login_user'])) {
                         <li class="nav-item">
                             <a class="nav-link" href="students.php">
                                 <span data-feather="users"></span>
-                                Students
+                                Facilities
                             </a>
                         </li>
                         <li class="nav-item">
@@ -239,78 +240,257 @@ if (isset($_SESSION['login_user'])) {
                                 Event
                             </a>
                         </li>
+
+                        <br><br><br>
+
+
+                        <hr style="border-top: 2px solid #bbb;">
                         <li class="nav-item">
-                            <a class="nav-link" href="questions.php">
+                            <a class="nav-link" href="manageforms.php">
                                 <span data-feather="layers"></span>
                                 Manage Forms
                             </a>
                         </li>
-                    </ul>
-                    <h6
-                        class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Statistics</span>
-                        <a class="link-secondary" href="#" aria-label="Add a new report">
-                            <span data-feather="plus-circle"></span>
-                        </a>
-                    </h6>
-                    <ul class="nav flex-column mb-2">
+
                         <li class="nav-item">
-                            <a class="nav-link" id="stat" href="#">
-                                <span data-feather="file-text"></span>
-                                Faculty Analysis
+                            <a class="nav-link" href="manageUsers.php">
+                                <span data-feather="layers"></span>
+                                Manage Users
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="stat" href="#">
-                                <span data-feather="file-text"></span>
-                                College Analysis
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="stat" href="#">
-                                <span data-feather="file-text"></span>
-                                Course Analysis
-                            </a>
-                        </li>
-                        <div class="dropdown-divider"></div>
-                        <li class="nav-item">
-                            <a class="nav-link" id="more" href="#">
-                                <span data-feather="file-text"></span>
-                                More <i class="bi bi-box-arrow-in-right"></i>
-                            </a>
+ 
+                        
+                        <li class="nav-item text-nowrap">
+                        <a class="nav-link" href="logout.php">Sign out <i
+                        class="bi bi-arrow-right-circle-fill"></i></a>
                         </li>
                     </ul>
+
+                    
                 </div>
             </nav>
-
             <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-                <div
+            <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Alumni</h1>
+                    <h1 class="h2">Overall Feedback by Alumni</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
-                        <div class="btn-group mr-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                        <div class="btn-toolbar mb-2 mb-md-0">
+                            <div class="btn-group mr-2">
+                                <button type="button" class="btn btn-sm btn-outline-secondary"
+                                    id="export_button">Export</button>
+                                <a href="faculties.php" type="button" class="btn btn-light btn-outline-secondary"><i
+                                        class="bi bi-arrow-90deg-left"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+                <table class="table table-striped"  id="facFeedTable">
+                    <tbody>
+                        <tr>
+                            <th>Student Id</th>
+                            <th>Q1</th>
+                            <th>Q2</th>
+                            <th>Q3</th>
+                            <th>Q4</th>
+                            <th>Q5</th>
+                            <th>Q6</th>
+                            <th>Q7</th>
+                            <th>Q8</th>
+                            <th>Q9</th>
+                            <th>Q10</th>
+                            <th>Q11</th>
+                            <th>Q12</th>
+                            <th>Q13</th>
+                            <th>Q14</th>
+                            <th>Q15</th>
+                            <th>Q16</th>
+                            <th>Q17</th>
+                            <th>Q.....</th>
+                            <th>Comments</th>
+                        </tr>
+                        <?php
+                            $sql = "SELECT * FROM alumni_feedback";
+                            $query = mysqli_query($con, $sql);
+                            while ($row = mysqli_fetch_array($query)) {
+                                echo '
+                                <tr>
+                                <td>' . $row['s_id'] . '</td>
+                                <td>' . $row['q1'] . '</td>
+                                <td>' . $row['q2'] . '</td>
+                                <td>' . $row['q3'] . '</td>
+                                <td>' . $row['q4'] . '</td>
+                                <td>' . $row['q5'] . '</td>
+                                <td>' . $row['q6'] . '</td>
+                                <td>' . $row['q7'] . '</td>
+                                <td>' . $row['q8'] . '</td>
+                                <td>' . $row['q9'] . '</td>
+                                <td>' . $row['q10'] . '</td>
+                                <td>' . $row['q11'] . '</td>
+                                <td>' . $row['q12'] . '</td>
+                                <td>' . $row['q13'] . '</td>
+                                <td>' . $row['q14'] . '</td>
+                                <td>' . $row['q15'] . '</td>
+                                <td>' . $row['q16'] . '</td>
+                                <td>' . $row['q17'] . '</td>
+                                <td>.....</td>
+                                <td>' . $row['cmnt'] . '</td>
+                                </tr>';
+                                /*
+                                <td>' . $row['q18'] . '</td>
+                                <td>' . $row['q19'] . '</td>
+                                <td>' . $row['q20'] . '</td>
+                                <td>' . $row['q21'] . '</td>
+                                <td>' . $row['q22'] . '</td>
+                                <td>' . $row['q23'] . '</td>
+                                <td>' . $row['q24'] . '</td>
+                                <td>' . $row['q25'] . '</td>
+                                <td>' . $row['q26'] . '</td>
+                                <td>' . $row['q27'] . '</td>
+                                <td>' . $row['q28'] . '</td>
+                                <td>' . $row['q29'] . '</td>
+                                <td>' . $row['q30'] . '</td>
+                                <td>' . $row['q31'] . '</td>
+                                <td>' . $row['q32'] . '</td>
+                                <td>' . $row['q33'] . '</td>
+                                <td>' . $row['q34'] . '</td>
+                                <td>' . $row['q35'] . '</td>
+                                <td>' . $row['q36'] . '</td>*/
+                            }
+                            ?>
+                    </tbody>
+                </table>
+                <span class="text-muted">*Note: Click on the export button to download and view the feedbacks completely.</span>
+
+                <table class="table table-striped" style="display:none;" id="facFeedTableC">
+                    <tbody>
+                        <tr>
+                            <th>Student Id</th>
+                            <th>Q1</th>
+                            <th>Q2</th>
+                            <th>Q3</th>
+                            <th>Q4</th>
+                            <th>Q5</th>
+                            <th>Q6</th>
+                            <th>Q7</th>
+                            <th>Q8</th>
+                            <th>Q9</th>
+                            <th>Q10</th>
+                            <th>Q11</th>
+                            <th>Q12</th>
+                            <th>Q13</th>
+                            <th>Q14</th>
+                            <th>Q15</th>
+                            <th>Q16</th>
+                            <th>Q17</th>
+                            <th>Q18</th>
+                            <th>Q19</th>
+                            <th>Q20</th>
+                            <th>Q21</th>
+                            <th>Q22</th>
+                            <th>Q23</th>
+                            <th>Q24</th>
+                            <th>Q25</th>
+                            <th>Q26</th>
+                            <th>Q27</th>
+                            <th>Q28</th>
+                            <th>Q29</th>
+                            <th>Q30</th>
+                            <th>Q31</th>
+                            <th>Q32</th>
+                            <th>Q33</th>
+                            <th>Q34</th>
+                            <th>Q35</th>
+                            <th>Q36</th>
+                            <th>Comments</th>
+                        </tr>
+                        <?php
+                            $sql = "SELECT * FROM alumni_feedback";
+                            $query = mysqli_query($con, $sql);
+                            while ($row = mysqli_fetch_array($query)) {
+                                echo '
+                                <tr>
+                                <td>' . $row['s_id'] . '</td>
+                                <td>' . $row['q1'] . '</td>
+                                <td>' . $row['q2'] . '</td>
+                                <td>' . $row['q3'] . '</td>
+                                <td>' . $row['q4'] . '</td>
+                                <td>' . $row['q5'] . '</td>
+                                <td>' . $row['q6'] . '</td>
+                                <td>' . $row['q7'] . '</td>
+                                <td>' . $row['q8'] . '</td>
+                                <td>' . $row['q9'] . '</td>
+                                <td>' . $row['q10'] . '</td>
+                                <td>' . $row['q11'] . '</td>
+                                <td>' . $row['q12'] . '</td>
+                                <td>' . $row['q13'] . '</td>
+                                <td>' . $row['q14'] . '</td>
+                                <td>' . $row['q15'] . '</td>
+                                <td>' . $row['q16'] . '</td>
+                                <td>' . $row['q17'] . '</td>
+                                <td>' . $row['q18'] . '</td>
+                                <td>' . $row['q19'] . '</td>
+                                <td>' . $row['q20'] . '</td>
+                                <td>' . $row['q21'] . '</td>
+                                <td>' . $row['q22'] . '</td>
+                                <td>' . $row['q23'] . '</td>
+                                <td>' . $row['q24'] . '</td>
+                                <td>' . $row['q25'] . '</td>
+                                <td>' . $row['q26'] . '</td>
+                                <td>' . $row['q27'] . '</td>
+                                <td>' . $row['q28'] . '</td>
+                                <td>' . $row['q29'] . '</td>
+                                <td>' . $row['q30'] . '</td>
+                                <td>' . $row['q31'] . '</td>
+                                <td>' . $row['q32'] . '</td>
+                                <td>' . $row['q33'] . '</td>
+                                <td>' . $row['q34'] . '</td>
+                                <td>' . $row['q35'] . '</td>
+                                <td>' . $row['q36'] . '</td>
+                                <td>' . $row['cmnt'] . '</td>
+                                </tr>
+                                ';
+                            }
+                            ?>
+                    </tbody>
+                </table>
+                
             </main>
-        </div>
-    </div>
+            <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-DBjhmceckmzwrnMMrjI7BvG2FmRuxQVaTfFYHgfnrdfqMhxKt445b7j3KBQLolRl"
+                crossorigin="anonymous">
+            </script>
 
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.24.1/feather.min.js"
+                integrity="sha384-EbSscX4STvYAC/DxHse8z5gEDaNiKAIGW+EpfzYTfQrgIlHywXXrM9SUIZ0BlyfF"
+                crossorigin="anonymous">
+            </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
+                integrity="sha384-i+dHPTzZw7YVZOx9lbH5l6lP74sLRtMtwN2XjVqjf3uAGAREAF4LMIUDTWEVs4LI"
+                crossorigin="anonymous">
+            </script>
+            <script src="dashboard.js"></script>
+            <script>
+            function html_to_excel(type) {
+                var data = document.getElementById('facFeedTableC');
+                var file = XLSX.utils.table_to_book(data, {
+                    sheet: "sheet1"
+                });
 
-    <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-DBjhmceckmzwrnMMrjI7BvG2FmRuxQVaTfFYHgfnrdfqMhxKt445b7j3KBQLolRl" crossorigin="anonymous">
-    </script>
+                XLSX.write(file, {
+                    bookType: type,
+                    bookSST: true,
+                    type: 'base64'
+                });
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.24.1/feather.min.js"
-        integrity="sha384-EbSscX4STvYAC/DxHse8z5gEDaNiKAIGW+EpfzYTfQrgIlHywXXrM9SUIZ0BlyfF" crossorigin="anonymous">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
-        integrity="sha384-i+dHPTzZw7YVZOx9lbH5l6lP74sLRtMtwN2XjVqjf3uAGAREAF4LMIUDTWEVs4LI" crossorigin="anonymous">
-    </script>
-    <script src="dashboard.js"></script>
+                XLSX.writeFile(file, 'file.' + type);
+            }
+
+            const export_button = document.getElementById('export_button');
+
+            export_button.addEventListener('click', () => {
+                html_to_excel('xlsx');
+            });
+            </script>
 </body>
 
 </html>

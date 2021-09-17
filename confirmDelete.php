@@ -1,5 +1,46 @@
+<?php
+session_start();
+include "config.php";
 
-</html>
+if (isset($_SESSION['login_user_admin'])) {
+    $userID = $_POST['delete'];
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if($_POST['cnfrmDlt']){
+            $vQuery = "DELETE FROM students WHERE s_id='$userID'";
+            $vResult = mysqli_query($con, $vQuery);
+                if (!$vResult) {
+                    echo '<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
+                            </script>
+                            <script>
+                                window.onload = function swal() {
+                                    Swal.fire({
+                                        icon: \'error\',
+                                title: \'Oops...\',
+                                text: \'Student could not be deleted!\',
+                                })
+                                };
+                            </script>';
+                    echo '<meta http-equiv="refresh" content="1.5; URL=\'manageUsers.php\'" />';
+                }else{
+                    echo '<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
+                            </script>
+                            <script>
+                                window.onload = function swal() {
+                                    Swal.fire({
+                                        icon: \'success\',
+                                title: \'Deleted\',
+                                text: \'Student was deleted successfully!\',
+                                })
+                                };
+                            </script>';
+                    echo '<meta http-equiv="refresh" content="1.5; URL=\'manageUsers.php\'" />';
+                }
+        }
+}
+
+?>
+
 
 <!doctype html>
 <html lang="en">
@@ -7,8 +48,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.72.0">
-    <title>Admin | Dashboard</title>
+    <title>Admin | Faculty</title>
 
     <link rel="canonical" href="https://v5.getbootstrap.com/docs/5.0/examples/dashboard/">
 
@@ -16,12 +59,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
         integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
     </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
         integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
     <style>
     .nav-link:hover {
@@ -165,26 +210,60 @@
     tr {
         text-align: center;
     }
+
+ html {
+        scroll-behavior: smooth;
+    }
+
+    * {
+        font-family: 'Ubuntu', sans-serif;
+    }
+
+    a {
+        text-decoration: none;
+        color:black;
+    }
+
+    a:hover {
+        background-color: #e2e8f0;
+
+        border-radius: 4px;
+        text-decoration: none;
+
+    }
+
+    body {
+        color: #1a202c;
+        background-color: #e2e8f0;
+    }
+
+    .card {
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
+    }
+
+    #messageLink:hover {
+        transition: 0ms;
+        background-color: #007bff;
+        color: white;
+
+    }
+
+    #head{
+        box-shadow:0px 0px 5px 1px grey;
+    }
     </style>
 </head>
 
 <body>
 
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#"><img src="images/Logo.png" width="30" alt="alvas">
-            Alva's
-            Feedback System</a>
+        <h6 class="navbar-brand col-md-3 col-lg-2 mr-0 px-3 bg-dark" h><img src="images/Logo.png" width="30" alt="alvas">
+            Feedback System</h6>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
             data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-        <ul class="navbar-nav px-3">
-            <li class="nav-item text-nowrap">
-                <a class="nav-link" id="signinbtn" href="logout.php">Sign out <i
-                        class="bi bi-arrow-right-circle-fill"></i></a>
-            </li>
-        </ul>
+  
     </nav>
 
     <div class="container-fluid">
@@ -192,11 +271,7 @@
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
-                        <li class="nav-item">
-                        <h2 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-dark">
-                            <span>Dashboard</span>
-                        </h2>    
-                        </li>
+
                         <h6
                             class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                             <span>Feedbacks</span>
@@ -205,7 +280,7 @@
                             </a>
                         </h6>
                         <li class="nav-item">
-                            <a class="nav-link active" href="faculties.php">
+                            <a class="nav-link" href="faculties.php">
                                 <span data-feather="shopping-cart"></span>
                                 Faculties
                             </a>
@@ -213,7 +288,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="students.php">
                                 <span data-feather="users"></span>
-                                Students
+                                Facilities
                             </a>
                         </li>
                         <li class="nav-item">
@@ -240,87 +315,61 @@
                                 Event
                             </a>
                         </li>
+
+                        <br><br><br>
+                        <br><br><br>
+
+                        <hr style="border-top: 2px solid #bbb;">
                         <li class="nav-item">
-                            <a class="nav-link" href="questions.php">
+                            <a class="nav-link" href="manageforms.php">
                                 <span data-feather="layers"></span>
-                                Questions
+                                Manage Forms
                             </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link active" href="manageUsers.php">
+                                <span data-feather="layers"></span>
+                                Manage Users
+                            </a>
+                        </li>
+ 
+                        
+                        <li class="nav-item text-nowrap">
+                        <a class="nav-link" href="logout.php">Sign out <i
+                        class="bi bi-arrow-right-circle-fill"></i></a>
                         </li>
                     </ul>
-                    <h6
-                        class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Statistics</span>
-                        <a class="link-secondary" href="#" aria-label="Add a new report">
-                            <span data-feather="plus-circle"></span>
-                        </a>
-                    </h6>
-                    <ul class="nav flex-column mb-2">
-                        <li class="nav-item">
-                            <a class="nav-link" id="stat" href="#">
-                                <span data-feather="file-text"></span>
-                                Faculty Analysis
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="stat" href="#">
-                                <span data-feather="file-text"></span>
-                                College Analysis
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="stat" href="#">
-                                <span data-feather="file-text"></span>
-                                Course Analysis
-                            </a>
-                        </li>
-                        <div class="dropdown-divider"></div>
-                        <li class="nav-item">
-                            <a class="nav-link" id="more" href="#">
-                                <span data-feather="file-text"></span>
-                                More <i class="bi bi-box-arrow-in-right"></i>
-                            </a>
-                        </li>
-                    </ul>
+
+                    
                 </div>
             </nav>
             <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-                <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2"><?php echo $title;?></h1>
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                        <div class="btn-toolbar mb-2 mb-md-0">
-                            <div class="btn-group mr-2">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="card text-center">
+        <br><br>
+        <div class="card-header text-muted">
+            *Note: This process cannot be undone!
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Are you sure you want to delete the user?</h5>
+        </div>
+        <div class="card-footer text-muted">
+            <form action="" method="POST">
+            <button class="btn btn-outline-danger" name="cnfrmDlt" type="submit">Confirm Delete</button>
+            </form>
+        </div>
+    </div>
+        </main>
+        <br>
+        <br>
 
-            </main>
-            <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-DBjhmceckmzwrnMMrjI7BvG2FmRuxQVaTfFYHgfnrdfqMhxKt445b7j3KBQLolRl"
-                crossorigin="anonymous">
-            </script>
 
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.24.1/feather.min.js"
-                integrity="sha384-EbSscX4STvYAC/DxHse8z5gEDaNiKAIGW+EpfzYTfQrgIlHywXXrM9SUIZ0BlyfF"
-                crossorigin="anonymous">
-            </script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
-                integrity="sha384-i+dHPTzZw7YVZOx9lbH5l6lP74sLRtMtwN2XjVqjf3uAGAREAF4LMIUDTWEVs4LI"
-                crossorigin="anonymous">
-            </script>
-            <script src="dashboard.js"></script>
-            <script>
-            function searchView() {
-                document.getElementById('viewTable').style.display = "none";
-                document.getElementById('searchForm').style.display = "block";
-            }
-
-            function allView() {
-                document.getElementById('viewTable').style.display = "table";
-                document.getElementById('searchForm').style.display = "none";
-            }
-            </script>
 </body>
 
 </html>
+
+<?php
+}else{
+    echo "<script>location.href='adminlogin.php'</script>";
+}
+?>

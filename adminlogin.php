@@ -1,37 +1,36 @@
 <?php
 include("config.php");
-if (isset($_SESSION['username'])) {
-    header("location: faculties.php");
-}
 session_start();
+if (isset($_SESSION['login_user_admin'])) {
+    header("location: faculties.php");
+} else {
 
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $id = $_POST['uname'];
+        $password = md5($_POST['pwd']);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = mysqli_real_escape_string($con, $_POST['uname']);
-    $password = md5(mysqli_real_escape_string($con, $_POST['pwd']));
+        $sql = "SELECT u_id FROM users WHERE u_name = '$id' and u_pass = '$password' and u_type='admin'";
+        $result = mysqli_query($con, $sql);
+        $row = mysqli_fetch_array($result);
+        $count = mysqli_num_rows($result);
 
-
-    $sql = "SELECT u_id FROM users WHERE u_name = '$username' and u_pass = '$password'";
-    $result = mysqli_query($con, $sql);
-    $row = mysqli_fetch_array($result);
-    $count = mysqli_num_rows($result);
-
-    if ($count == 1) {
-        $_SESSION['login_user'] = $username;
-        header("location: faculties.php");
-    } else {
-        echo '<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
-        </script>
-        <script>
-        window.onload = function swal() {
-        Swal.fire({
-            icon: \'error\',
-            title: \'Oops...\',
-            text: \'Incorrect Credentials!\',
-    })
-};
-</script>';
-        echo '<meta http-equiv="refresh" content="1.5; URL=\'adminlogin.php\'" />';
+        if ($count == 1) {
+            $_SESSION['login_user_admin'] = $id;
+            header("location: faculties.php");
+        } else {
+            echo '<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
+                </script>
+                <script>
+                window.onload = function swal() {
+                Swal.fire({
+                    icon: \'error\',
+                    title: \'Oops...\',
+                    text: \'Incorrect Credentials!\',
+            })
+        };
+        </script>';
+            echo '<meta http-equiv="refresh" content="1.5; URL=\'adminlogin.php\'" />';
+        }
     }
 }
 ?>
