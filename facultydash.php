@@ -5,17 +5,14 @@ session_start();
 
 if (isset($_SESSION['login_user_faculty'])) {
     $userID = $_SESSION['login_user_faculty'];
-    $query1 = "select avg(q8) from faculty_feedback where f_id='$userID'";
-    $result1 = mysqli_query($con, $query1);
-    $row1 = mysqli_fetch_array($result1);
-    $avg = (round($row1['avg(q8)'])) * 2;
 
-    $query2 = "select * from faculty where f_id='$userID'";
+
+    $query2 = "select * from faculty_details where f_id='$userID'";
     $result2 = mysqli_query($con, $query2);
     $row2 = mysqli_fetch_array($result2);
     $name = ($row2['f_name']);
 
-    $queryDId = "select * from faculty where f_id='$userID'";
+    $queryDId = "select * from faculty_details where f_id='$userID'";
     $resultDId = mysqli_query($con, $queryDId);
     $rowDId = mysqli_fetch_array($resultDId);
     $dId = ($rowDId['d_id']);
@@ -30,6 +27,11 @@ if (isset($_SESSION['login_user_faculty'])) {
     $rowq9 = mysqli_fetch_array($resultq9);
     $avgq9 = (round($rowq9['avg(q9)'])) * 2;
 
+    $queryq7 = "select avg(q7) from faculty_feedback where f_id='$userID'";
+    $resultq7 = mysqli_query($con, $queryq7);
+    $rowq7 = mysqli_fetch_array($resultq7);
+    $avgq7 = (round($rowq7['avg(q7)'])) * 2;
+
     $queryq3 = "select avg(q3) from faculty_feedback where f_id='$userID'";
     $resultq3 = mysqli_query($con, $queryq3);
     $rowq3 = mysqli_fetch_array($resultq3);
@@ -40,25 +42,16 @@ if (isset($_SESSION['login_user_faculty'])) {
     $rowq6 = mysqli_fetch_array($resultq6);
     $avgq6 = (round($rowq6['avg(q6)'])) * 2;
 
-    $queryq7 = "select avg(q7) from faculty_feedback where f_id='$userID'";
-    $resultq7 = mysqli_query($con, $queryq7);
-    $rowq7 = mysqli_fetch_array($resultq7);
-    $avgq7 = (round($rowq7['avg(q7)'])) * 2;
+
+    $queryq1 = "select avg(q1) from faculty_feedback where f_id='$userID'";
+    $resultq1 = mysqli_query($con, $queryq1);
+    $rowq1 = mysqli_fetch_array($resultq1);
+    $avgq1 = (round($rowq1['avg(q1)'])) * 2;
 
 
 
-    $phone = 93456789788;
+    $overall = ($avgq3+$avgq6+$avgq7+$avgq8+$avgq9+$avgq1)*2;
 
-    $email = "naveenkumar12@gmail.com";
-
-    $lm = 6;
-    $cm = 8;
-
-    $notify = 3;
-
-    $overall = 4;
-
-    $overall = ($overall) * 10;
 
     if ($overall >= 90) {
         $pgbcolor = "success";
@@ -204,7 +197,7 @@ if (isset($_SESSION['login_user_faculty'])) {
             <div class="navbar-nav"><a class="nav-link active" href="#">Home <span
                         class="sr-only">(current)</span></a><a class="nav-link active" href="home.html">Help</a>
                 <a class="nav-link active" href="#">About</a>
-                <a class="nav-link active" href="contact.html">Contact Us</a>
+                <a class="nav-link active" href="Home.php#contact">Contact Us</a>
                 <li class="nav-item text-nowrap"><a class="nav-link" id="signinbtn" href="logout.php">Sign out <i
                             class="bi bi-arrow-right-circle-fill"></i></a></li>
         </ul>
@@ -222,8 +215,7 @@ if (isset($_SESSION['login_user_faculty'])) {
                                     class="rounded-circle" width="150">
                                 <div class="mt-3">
                                     <h4><?php echo "$name"; ?></h4>
-                                    <p class="text-secondary mb-1">Deptartment : CSE</p>
-                                    <p class="text-muted font-size-sm">Department Id: <?php echo "$dId"; ?></p>
+                                    <p class="text-muted font-size-sm">Faculty: <?php echo "$userID"; ?></p>
                                     
                                 </div>
                             </div>
@@ -233,120 +225,42 @@ if (isset($_SESSION['login_user_faculty'])) {
                 </div>
                 <div class="col-md-8">
                     <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Full Name</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    <?php echo "$name"; ?>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">ID</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    <?php echo "$userID"; ?>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Email</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    <?php echo "$email"; ?>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Phone</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    <?php echo "$phone"; ?>
-                                </div>
-                            </div>
-
-                            <hr>
-                        </div>
+                    <div class="card-body">
+                                        <h5 class="card-title text-center"><b>Overall Performance</b></h5>
+                                        <div class="progress mb-3" style="height: 15px">
+                                            <div class="progress-bar bg-<?php echo "$pgbcolor"; ?>" role="progressbar"
+                                                style="width: <?php echo "$overall"; ?>%">
+                                            </div>
+                                        </div>
+                                        <p class="card-text">Here is your monthly performance summary</p>
+                                        <p class="card-text"><b>Communication</b></p>
+                                        <div class="progress mb-3" style="height: 8px">
+                                            <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo ($avgq3)*10; ?>%"
+                                                 aria-valuemin="0"
+                                                aria-valuemax="10">
+                                            </div>
+                                        </div>
+                                        <p class="card-text"><b>Teaching</b></p>
+                                        <div class="progress mb-3" style="height: 8px">
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo ($avgq1)*10;?>%"
+                                                 aria-valuemin="0"
+                                                aria-valuemax="10">
+                                            </div>
+                                        </div>
+                                        <p class="card-text"><b>Attitude</b></p>
+                                        <div class="progress mb-3" style="height: 8px">
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo ($avgq6)*10; ?>%"
+                                                 aria-valuemin="0"
+                                                aria-valuemax="10">
+                                            </div>
+                                        </div>
+                                        <a href="#viewMore" class="btn btn-primary">
+                                            View More
+                                        </a>
+                                    </div>
                     </div>
 
-                    <div class="row gutters-sm">
-                        <div class="col-sm-6 mb-3">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h6 class="d-flex align-items-center mb-3"><i
-                                            class="material-icons text-info mr-2"></i>Subject-wise analyisis
-                                    </h6>
-                                    <small>JAVABCA3A</small>
-                                    <div class="progress mb-3" style="height: 5px">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 80%"
-                                            aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <small>JAVABCA3B</small>
-                                    <div class="progress mb-3" style="height: 5px">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 72%"
-                                            aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <small>C++BCA2B</small>
-                                    <div class="progress mb-3" style="height: 5px">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 89%"
-                                            aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <small>FITBCA1A</small>
-                                    <div class="progress mb-3" style="height: 5px">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 55%"
-                                            aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <small>ECOMERCEBCOM2A</small>
-                                    <div class="progress mb-3" style="height: 5px">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 66%"
-                                            aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 mb-3">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h5 class="card-title text-center"><b>Overall Performance</b></h5>
-                                    <div class="progress mb-3" style="height: 15px">
-                                        <div class="progress-bar bg-<?php echo "$pgbcolor"; ?>" role="progressbar"
-                                            style="width: <?php echo "$overall"; ?>%">
-                                        </div>
-                                    </div>
-                                    <p class="card-text">Here is your monthly performance summary</p>
-                                    <p class="card-text"><b>Communication</b></p>
-                                    <div class="progress mb-3" style="height: 8px">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 60%"
-                                            aria-valuenow="<?php echo "$avg" ?>" aria-valuemin="0" aria-valuemax="100">
-                                        </div>
-                                    </div>
-                                    <p class="card-text"><b>Teaching</b></p>
-                                    <div class="progress mb-3" style="height: 8px">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 70%"
-                                            aria-valuenow="<?php echo "$avg" ?>" aria-valuemin="0" aria-valuemax="100">
-                                        </div>
-                                    </div>
-                                    <p class="card-text"><b>Attitude</b></p>
-                                    <div class="progress mb-3" style="height: 8px">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 70%"
-                                            aria-valuenow="<?php echo "$avg" ?>" aria-valuemin="0" aria-valuemax="100">
-                                        </div>
-                                    </div>
-                                    <a href="#viewMore" class="btn btn-primary">
-                                        View More
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-
+                    
 
 
                 </div>
@@ -384,24 +298,22 @@ if (isset($_SESSION['login_user_faculty'])) {
             </div>
         </div>
     </center>
-
-
-    <div
-        class="d-flex bg-light justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">
-
-        </h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <div class="btn-group mr-2">
-            </div>
-        </div>
     </div>
-        <center>
+    <div class="container bf-light">
+                        <h3 class="text-center">Examiner Feedback</h3>
+                        <hr style="border-top: 2px solid #bbb;">
+                        <div class="container">
+                        <div class="card text-center">
 
-            <br><br>
-        </center>
-    </div>
-    <br>
+                            <div class="card-body">
+                                <a href="examFeed.php" class="btn btn-success">Give Feedback</a>
+                            </div>
+                            <div class="card-footer text-muted">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <br>
     <div class="container text-center">
         <span class="small">
             ALVA’S INSTITUTE OF ENGINEERING & TECHNOLOGY
@@ -437,32 +349,6 @@ if (isset($_SESSION['login_user_faculty'])) {
             }]
         },
         options: {
-            title: {
-                display: true,
-                text: ""
-            }
-        }
-    });
-
-
-    var xValues = ["Last Month", "Current Month"];
-    var yValues = [<?php echo "$lm"; ?>, <?php echo "$cm"; ?>, 0, 10];
-    var barColor = ["783fd5", "#2b5797"];
-
-
-    new Chart("myChart2", {
-        type: "bar",
-        data: {
-            labels: xValues,
-            datasets: [{
-                backgroundColor: barColor,
-                data: yValues
-            }]
-        },
-        options: {
-            legend: {
-                display: false
-            },
             title: {
                 display: true,
                 text: ""

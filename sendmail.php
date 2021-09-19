@@ -67,7 +67,7 @@
             To: '<?php echo "$e_mail"; ?>',
             From: "amialwyn@gmail.com",
             Subject: "Testing",
-            Body: 'Dear employer,<br><br><br>Thank you for interviewing our students! We’d love to hear what you think of our students<br>Your feedback will help us determine what areas we have to improve and how we can make our students better for you.<br><br><br>Use the below credentials<br>Your Username: <?php echo "$e_mail"; ?><br>Your Password: 1234<br><br>Use this link the below link to provide your feedback,<br>http://localhost/feedbackms/FeedbackMs/employerlogin.php<br><br><br><br>Thanks and Regards,<br><br><br>Alvas Education Foundation'
+            Body: 'Dear employer,<br><br><br>Thank you for interviewing our students! We’d love to hear what you think of our students<br>Your feedback will help us determine what areas we have to improve and how we can make our students better for you.<br><br><br>Use the below credentials<br>Your Username: <?php echo "$e_id"; ?><br>Your Password: 1234<br><br>Use this link the below link to provide your feedback,<br>http://localhost/feedbackms/FeedbackMs/employerlogin.php<br><br><br><br>Thanks and Regards,<br><br><br>Alvas Education Foundation'
         }).then(
             window.onload = function swal() {
                 Swal.fire({

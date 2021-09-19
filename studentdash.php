@@ -91,7 +91,30 @@ if (isset($_SESSION['login_user_student'])) {
                     </div>
                 </div>
             </div>
+            
         </div>
+        <div class="row text-center">
+        <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Event Feedback</h5>
+                        <p class="card-text">Provide feedbacks about the events arranged by the organisation</p><a
+                            href="eventForm.php" class="btn btn-primary">Give Feedback</a>
+                    </div>
+                </div>
+        </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Course Exit Form</h5>
+                        <p class="card-text">Fill out this form while leaving the course</p><a
+                            href="courseExForm.php" class="btn btn-primary">Give Feedback</a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
         
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">

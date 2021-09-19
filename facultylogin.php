@@ -65,7 +65,7 @@ if (isset($_SESSION['login_user_faculty'])) {
 
         </div>
         <div class="homeImgBox">
-            <a href="test.php"><img src="images/goback.png" alt="Home" class="goBack"></a>
+            <a href="Home.php"><img src="images/goback.png" alt="Home" class="goBack"></a>
         </div>
     </form>
 </body>

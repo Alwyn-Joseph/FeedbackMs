@@ -2,7 +2,6 @@
 session_start();
 include "config.php";
 if (isset($_SESSION['login_user_admin'])) {
-    $notify = 3;
 ?>
 
 </html>
@@ -16,7 +15,7 @@ if (isset($_SESSION['login_user_admin'])) {
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.72.0">
-    <title>Admin | Alumni</title>
+    <title>Admin | Examiner</title>
 
     <link rel="canonical" href="https://v5.getbootstrap.com/docs/5.0/examples/dashboard/">
 
@@ -32,7 +31,7 @@ if (isset($_SESSION['login_user_admin'])) {
     </script>
 
     <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
-
+ 
     <style>
     .nav-link:hover {
         background-color: #8dd8b3;
@@ -175,8 +174,6 @@ if (isset($_SESSION['login_user_admin'])) {
     tr {
         text-align: center;
     }
-
-    
     </style>
 </head>
 
@@ -197,7 +194,6 @@ if (isset($_SESSION['login_user_admin'])) {
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
-
                         <h6
                             class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                             <span>Feedbacks</span>
@@ -218,7 +214,7 @@ if (isset($_SESSION['login_user_admin'])) {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="alumni.php">
+                            <a class="nav-link" href="alumni.php">
                                 <span data-feather="bar-chart-2"></span>
                                 Alumni
                             </a>
@@ -236,20 +232,36 @@ if (isset($_SESSION['login_user_admin'])) {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="event.php">
+                            <a class="nav-link " href="event.php">
                                 <span data-feather="bar-chart-2"></span>
                                 Event
                             </a>
-                        </li>
+                            </li>
 
-                        <br><br><br>
+                            <li class="nav-item">
+                            <a class="nav-link active" href="examiner.php">
+                                <span data-feather="bar-chart-2"></span>
+                                Examiner
+                            </a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link " href="cExit.php">
+                                <span data-feather="bar-chart-2"></span>
+                                Course Exit
+                            </a>
+                            </li>
+
+
+                        
                         <hr style="border-top: 2px solid #bbb;">
                         <li class="nav-item">
                             <a class="nav-link" href="notifications.php">
                                 <span data-feather="layers"></span>
-                                Notifications <sup><span class="badge badge-danger" style="border-radius:5px;background-color:red;"><?php echo "$notify"; ?></span></sup>
+                                Notifications
                             </a>
                         </li>
+
+                        
 
 
                         <hr style="border-top: 2px solid #bbb;">
@@ -278,42 +290,52 @@ if (isset($_SESSION['login_user_admin'])) {
                 </div>
             </nav>
             <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Notifications</h1>
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Examiner Feedbacks</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-toolbar mb-2 mb-md-0">
                             <div class="btn-group mr-2">
+                                <button type="button" class="btn btn-sm btn-outline-secondary"
+                                    id="export_button">Export</button>
                                 <a href="faculties.php" type="button" class="btn btn-light btn-outline-secondary"><i
                                         class="bi bi-arrow-90deg-left"></i></a>
                             </div>
                         </div>
                     </div>
-            </div>
-            <?php
-            $uid=$_POST['notiId'];
-            $notify = "select * from admin_notifications where u-id='$uid'";
-            $notifyRes = mysqli_query($con,$notify);
-            $nRow = mysqli_fetch_array($notifyRes);
-            while($nRow = mysqli_fetch_array($notifyRes)) {
-            echo'
-            <div class="jumbotron">
-            <h1 class="display-4">Sender: '.$nRow['u_name'].'</h1>
-            <p class="lead">'.$nRow['u_message'].'</p>
-            <hr class="my-4">
-            <p>Sender email: '.$nRow['u_id'].'</p>
-            <a class="btn btn-primary btn-lg" href="#" role="button">Reply</a>
-            </div>
-            <br><br>
-        
-
-            ';
-            }
-            ?>
-            <center>
-            
-            </div>
-            <br><br>
-        </center>
+                </div>
+                <table class="table table-striped" id="facFeedTable">
+                    <tbody>
+                        <tr>
+                            <th>Exam Id</th>
+                            <th>Faculty Id</th>
+                            <th>Q1</th>
+                            <th>Q2</th>
+                            <th>Q3</th>
+                            <th>Q4</th>
+                            <th>Q5</th>
+                            <th>Comments</th>
+                        </tr>
+                        <?php
+                            include 'config.php';
+                            $sql = "SELECT * FROM examiner_feedback";
+                            $query = mysqli_query($con, $sql);
+                            while ($row = mysqli_fetch_array($query)) {
+                                echo '
+                                <tr>
+                                <td>' . $row['e_id'] . '</td>
+                                <td>' . $row['f_id'] . '</td>
+                                <td>' . $row['q1'] . '</td>
+                                <td>' . $row['q2'] . '</td>
+                                <td>' . $row['q3'] . '</td>
+                                <td>' . $row['q4'] . '</td>
+                                <td>' . $row['q5'] . '</td>
+                                <td>' . $row['cmnt'] . '</td>
+                                </tr>';
+                            }
+                            ?>
+                    </tbody>
+                </table>
             </main>
             <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-DBjhmceckmzwrnMMrjI7BvG2FmRuxQVaTfFYHgfnrdfqMhxKt445b7j3KBQLolRl"
@@ -328,7 +350,29 @@ if (isset($_SESSION['login_user_admin'])) {
                 integrity="sha384-i+dHPTzZw7YVZOx9lbH5l6lP74sLRtMtwN2XjVqjf3uAGAREAF4LMIUDTWEVs4LI"
                 crossorigin="anonymous">
             </script>
-            
+            <script src="dashboard.js"></script>
+            <script>
+            function html_to_excel(type) {
+                var data = document.getElementById('facFeedTable');
+                var file = XLSX.utils.table_to_book(data, {
+                    sheet: "sheet1"
+                });
+
+                XLSX.write(file, {
+                    bookType: type,
+                    bookSST: true,
+                    type: 'base64'
+                });
+
+                XLSX.writeFile(file, 'file.' + type);
+            }
+
+            const export_button = document.getElementById('export_button');
+
+            export_button.addEventListener('click', () => {
+                html_to_excel('xlsx');
+            });
+            </script>
 </body>
 
 </html>

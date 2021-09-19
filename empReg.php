@@ -5,12 +5,13 @@ session_start();
 if (isset($_SESSION['login_user_admin'])) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $name = $_POST['name'];
-        $usn = $_POST['usn'];
+        $usn = $_POST['eid'];
         $psw = md5($_POST['psw']);
         $date = date("Y/m/d");
         $utype = "employer";
         $status = "active";
-        
+
+        if(strlen($usn)==4 && $usn[0]=='E'){        
         $val = "select * from users where u_id='$usn'";
         $valR = mysqli_query($con, $val);
         $valRow = mysqli_fetch_array($valR);
@@ -50,13 +51,26 @@ if (isset($_SESSION['login_user_admin'])) {
                         Swal.fire({
                             icon: \'success\',
                     title: \'Registered\',
-                    text: \'employer successfully registered!\',
+                    text: \'Employer successfully registered!\',
                     })
                     };
                 </script>';
             }
 
-        } 
+        }
+    }else{
+        echo '<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
+                    </script>
+                    <script>
+                        window.onload = function swal() {
+                            Swal.fire({
+                                icon: \'warning\',
+                        title: \'Warning!\',
+                        text: \'The Employer ID should be in the form ENNN eg: E101\',
+                        })
+                        };
+                    </script>';
+    }
 
 
 
@@ -378,7 +392,14 @@ button:hover {
                             </a>
                         </li>
                         <br><br><br>
-                        <br><br><br>
+                        <hr style="border-top: 2px solid #bbb;">
+                        <li class="nav-item">
+                            <a class="nav-link" href="notifications.php">
+                                <span data-feather="layers"></span>
+                                Notifications 
+                            </a>
+                        </li>
+
 
                         <hr style="border-top: 2px solid #bbb;">
                         <li class="nav-item">
@@ -389,7 +410,7 @@ button:hover {
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="manageUsers.php">
+                            <a class="nav-link active" href="manageUsers.php">
                                 <span data-feather="layers"></span>
                                 Manage Users
                             </a>
@@ -417,7 +438,7 @@ button:hover {
     <input type="text" placeholder="Enter Name" name="name" required>
 
     <label for="usn"><b>User ID</b></label>
-    <input type="text" placeholder="Enter USN" name="usn" required>
+    <input type="text" placeholder="Enter Employer ID" name="eid" required>
 
     <label for="psw"><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="psw" id="password" required>

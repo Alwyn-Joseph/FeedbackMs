@@ -2,49 +2,23 @@
 include "config.php";
 session_start();
 
-if (isset($_SESSION['login_user_student'])) {
+if (isset($_SESSION['login_user_faculty'])) {
 
-    $userId = $_SESSION['login_user_student'];
-
-    $query1 = "select * from student_details where s_id='$userId'";
-    $result1 = mysqli_query($con, $query1);
-    $row1 = mysqli_fetch_array($result1);
-    $cId = $row1['c_id'];
-
-    $query2 = "select * from subjects where c_id='$cId'";
-    $result2 = mysqli_query($con, $query2);
-    $row2 = mysqli_fetch_array($result2);
-    $fId = $row2['f_id'];
-
-    $query3 = "select * from faculty_details where f_id='$fId'";
-    $result3 = mysqli_query($con, $query3);
-    $row3 = mysqli_fetch_array($result3);
-    $facName = $row3['f_name'];
-
+    $userId = $_SESSION['login_user_faculty'];
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $s_id = $userId;
+        $f_id = $userId;
+        $e_id = $_POST['exams'];
         
-        $q1 = $_POST['127'];
-        $q2 = $_POST['128'];
-        $q3 = $_POST['129'];
-        $q4 = $_POST['130'];
-        $q5 = $_POST['131'];
-        $q6 = $_POST['132'];
-        $q7 = $_POST['133'];
-        $q8 = $_POST['134'];
-        $q9 = $_POST['135'];
-        $q10 = $_POST['136'];
-        $q11 = $_POST['137'];
-        $q12 = $_POST['138'];
-        $q13 = $_POST['139'];
-        $q14 = $_POST['140'];
-        $q15 = $_POST['141'];
-        $q16 = $_POST['142'];
-        $q17 = $_POST['143'];
+        $q1 = $_POST['212'];
+        $q2 = $_POST['213'];
+        $q3 = $_POST['214'];
+        $q4 = $_POST['215'];
+        $q5 = $_POST['211'];
+
         $cmnts = $_POST['comments'];
 
-        $sql = "insert into facilities_feedback(s_id,q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13,q14,q15,q16,q17,cmnt) values('$s_id','$q1','$q2','$q3','$q4','$q5','$q6','$q7','$q8','$q9','$q10','$q11','$q12','$q13','$q14','$q15','$q16','$q17','$cmnts')";
+        $sql = "insert into examiner_feedback(f_id,e_id,q1,q2,q3,q4,q5,cmnt) values('$f_id','$e_id','$q1','$q2','$q3','$q4','$q5','$cmnts')";
         $result = mysqli_query($con, $sql);
 
             if (!$result) {
@@ -71,7 +45,7 @@ if (isset($_SESSION['login_user_student'])) {
                         })
                         };
                     </script>';
-                    echo '<meta http-equiv="refresh" content="1.5; URL=\'studentdash.php\'" />';
+                    echo '<meta http-equiv="refresh" content="1.5; URL=\'facultydash.php\'" />';
             }
     }
 ?>
@@ -87,7 +61,7 @@ if (isset($_SESSION['login_user_student'])) {
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.72.0">
-    <title>Facility | Provide Your Feedback</title>
+    <title>Event | Provide Your Feedback</title>
 
     <link rel="canonical" href="https://v5.getbootstrap.com/docs/5.0/examples/dashboard/">
 
@@ -185,8 +159,8 @@ if (isset($_SESSION['login_user_student'])) {
 <body>
     <div class="mb-3" id="title">
         <center>
-            <h1 class="display-4 text-white">Facility Feedback Form</h1>
-            <small class="text-light">Feedback provided about facilities</small>
+            <h1 class="display-4 text-white">Event Feedback Form</h1>
+            <small class="text-light">Feedback provided about events</small>
             <br><br>
         </center>
     </div>
@@ -206,17 +180,23 @@ if (isset($_SESSION['login_user_student'])) {
                 <b>(1 – strongly disagree, 2 - disagree, 3 – not sure, 4 – agree, 5 – strongly agree)</b>
                 <br><br>
             </p>
-            <b>
-                <label class="form-label">ID(Student ID):</label>
-                <div class="form-group mb-2">
-                    <input class="form-control-plaintext" type="text" name="studentid"
-                        style="border-color:grey;  border-style: solid;padding:10px" readonly
-                        value="<?php echo $userId; ?>" required>
+            <div class="dropdown">
+                    <select class="btn btn-secondary dropdown-toggle bg-light text-dark" name="exams">
+                        <?php
+                            $qexm = "select * from exam_details where f_id='$userId'";
+                            $qres = mysqli_query($con, $qexm);
+
+                        while ($rowQ = mysqli_fetch_array($qres)) {
+                            echo '
+                            <option class="dropdown-item" value="' . $rowQ['e_id'] . '" required>' . $rowQ['e_name'] . '</option>';
+                        }
+                        ?>
+
+                    </select>
                 </div>
-            </b>
             <br>
                 <?php
-                    $query4 = "select * from questions where f_id='FM102'";
+                    $query4 = "select * from questions where f_id='FM109'";
                     $result4 = mysqli_query($con, $query4);
                         while ($row4 = mysqli_fetch_array($result4)) {
                             echo '<div class="container text-center" id="qsnbx">

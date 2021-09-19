@@ -6,7 +6,6 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if(isset($_POST['modify'])){
-        $q1 =  $_POST['199'];
         $q2 =  $_POST['211'];
         $q3 =  $_POST['212'];
         $q4 =  $_POST['213'];
@@ -21,8 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }*/
 
-        $query1 = "update questions set q_desc='$q1' where q_id='199'";
-        $result1 = mysqli_query($con, $query1);
 
         $query2 = "update questions set q_desc='$q2' where q_id='211'";
         $result2 = mysqli_query($con, $query2);

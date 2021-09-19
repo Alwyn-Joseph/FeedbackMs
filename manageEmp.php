@@ -5,7 +5,7 @@ include "config.php";
 if (isset($_SESSION['login_user_admin'])) {
     $userID = $_POST['eId'];
     if(isset($_POST['delete'])){
-        $Query = "select * from employer where e_id='$userID'";
+        $Query = "select * from users where u_id='$userID'";
         $Result = mysqli_query($con, $Query);
         $count = mysqli_num_rows($Result);
 
@@ -24,7 +24,7 @@ if (isset($_SESSION['login_user_admin'])) {
         echo '<meta http-equiv="refresh" content="1.5; URL=\'manageUsers.php\'" />';
 
         }else{
-            $vQuery = "delete FROM employer WHERE e_id='$userID'";
+            $vQuery = "delete FROM users WHERE u_id='$userID'";
                 $Result = mysqli_query($con, $vQuery);
                     if ($Result!=NULL) {
                         echo '<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
@@ -45,14 +45,18 @@ if (isset($_SESSION['login_user_admin'])) {
         }
     else{
 
-    $vQuery = "select * from employer where e_id='$userID'";
+    $vQuery = "select * from users where u_id='$userID' and u_type='employer'";
     $vResult = mysqli_query($con, $vQuery);
     $vRow = mysqli_fetch_array($vResult);
     $count = mysqli_num_rows($vResult);
 
     if ($count >= 1) {
-        $name=$vRow['e_name'];
-        $email=$vRow['e_mail'];
+
+        $name=$vRow['u_name'];
+        $status=$vRow['status'];
+        $doj=$vRow['doj'];
+        $utype=$vRow['u_type'];
+
 ?>
 
 
@@ -324,14 +328,35 @@ if (isset($_SESSION['login_user_admin'])) {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="event.php">
+                            <a class="nav-link " href="event.php">
                                 <span data-feather="bar-chart-2"></span>
                                 Event
                             </a>
+                            </li>
+
+                            <li class="nav-item">
+                            <a class="nav-link " href="examiner.php">
+                                <span data-feather="bar-chart-2"></span>
+                                Examiner
+                            </a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link " href="cExit.php">
+                                <span data-feather="bar-chart-2"></span>
+                                Course Exit
+                            </a>
+                            </li>
+                        
+                        <hr style="border-top: 2px solid #bbb;">
+                        <li class="nav-item">
+                            <a class="nav-link" href="notifications.php">
+                                <span data-feather="layers"></span>
+                                Notifications
+                            </a>
                         </li>
 
-                        <br><br><br>
-                        <br><br><br>
+                        
+
 
                         <hr style="border-top: 2px solid #bbb;">
                         <li class="nav-item">
@@ -368,6 +393,8 @@ if (isset($_SESSION['login_user_admin'])) {
                                         class="rounded-circle" width="150">
                                     <div class="mt-3">
                                         <h4><?php echo "$name"; ?></h4>
+                                        <p class="text-muted font-size-sm">User Id : <?php echo "$userID"; ?></p>
+
                                     </div>
                                 </div>
                             </div>
@@ -397,13 +424,30 @@ if (isset($_SESSION['login_user_admin'])) {
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Email :</h6>
+                                        <h6 class="mb-0">DOJ :</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <?php echo "$email"; ?>
+                                        <?php echo "$doj"; ?>
                                     </div>
                                 </div>
                                 <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Status :</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <?php echo "$status"; ?>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">User Type :</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <?php echo "$utype"; ?>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

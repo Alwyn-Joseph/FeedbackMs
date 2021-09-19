@@ -178,7 +178,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $qn=0;
                             while ($row = mysqli_fetch_array($res)) {
                                 echo '<div>
-                                <label for="">'.++$qn.'. </label>
                                 <input class="form-control-plaintext" type="text" name="'. $row['q_id'] . '"
                                         style="border-color:grey;  border-style: solid;padding:10px" value="'. $row['q_desc'] .'" >
                                         <br>

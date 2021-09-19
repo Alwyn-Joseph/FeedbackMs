@@ -53,6 +53,8 @@ if (isset($_SESSION['login_user_admin'])) {
 
     if ($count >= 1) {
 
+        
+
         $query2 = "select * from users where u_id='$userID'";
         $result2 = mysqli_query($con, $query2);
         $row2 = mysqli_fetch_array($result2);
@@ -83,10 +85,13 @@ if (isset($_SESSION['login_user_admin'])) {
         $rowq9 = mysqli_fetch_array($resultq9);
         $avgq9 = (round($rowq9['avg(q9)'])) * 2;
 
-        $lm = 6;
-        $cm = 8;
+        
+    $queryq1 = "select avg(q1) from faculty_feedback where f_id='$userID'";
+    $resultq1 = mysqli_query($con, $queryq1);
+    $rowq1 = mysqli_fetch_array($resultq1);
+    $avgq1 = (round($rowq1['avg(q1)'])) * 2;
 
-        $overall = ($avgq3+$avgq6+$avgq7+$avgq8+$avgq9)*2;
+        $overall = ($avgq3+$avgq6+$avgq7+$avgq8+$avgq9+$avgq1)*2;
 
         $overall = ($overall);
 
@@ -351,7 +356,7 @@ if (isset($_SESSION['login_user_admin'])) {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="alumni.php">
+                            <a class="nav-link" href="alumni.php">
                                 <span data-feather="bar-chart-2"></span>
                                 Alumni
                             </a>
@@ -369,14 +374,35 @@ if (isset($_SESSION['login_user_admin'])) {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="event.php">
+                            <a class="nav-link " href="event.php">
                                 <span data-feather="bar-chart-2"></span>
                                 Event
                             </a>
+                            </li>
+
+                            <li class="nav-item">
+                            <a class="nav-link " href="examiner.php">
+                                <span data-feather="bar-chart-2"></span>
+                                Examiner
+                            </a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link " href="cExit.php">
+                                <span data-feather="bar-chart-2"></span>
+                                Course Exit
+                            </a>
+                            </li>
+                        
+                        <hr style="border-top: 2px solid #bbb;">
+                        <li class="nav-item">
+                            <a class="nav-link" href="notifications.php">
+                                <span data-feather="layers"></span>
+                                Notifications
+                            </a>
                         </li>
 
-                        <br><br><br>
-                        <br><br><br>
+                        
+
 
                         <hr style="border-top: 2px solid #bbb;">
                         <li class="nav-item">
@@ -387,7 +413,7 @@ if (isset($_SESSION['login_user_admin'])) {
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="manageUsers.php">
+                            <a class="nav-link active" href="manageUsers.php">
                                 <span data-feather="layers"></span>
                                 Manage Users
                             </a>
@@ -414,22 +440,8 @@ if (isset($_SESSION['login_user_admin'])) {
                                     <div class="mt-3">
                                         <h4><?php echo "$name"; ?></h4>
                                         <p class="text-muted font-size-sm">Faculty Id: <?php echo "$userID"; ?></p>
+                                        <h6>Subjects Handled:</h6>
                                         
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="col-md-8">
-
-                        <div class="row gutters-sm">
-                            <div class="col-sm-6 mb-3">
-                                <div class="card h-100">
-                                    <div class="card-body">
-                                        <h6 class="d-flex align-items-center mb-3"><i
-                                                class="material-icons text-info mr-2"></i>Subject-wise analyisis
-                                        </h6>
                                         <?php 
                                         $sub="select * from subjects where f_id='$userID'";
                                         $subRes = mysqli_query($con,$sub);
@@ -438,20 +450,19 @@ if (isset($_SESSION['login_user_admin'])) {
                                             $prgrsRes = mysqli_query($con, $queryq9);
                                             $prgrsRow = mysqli_fetch_array($resultq9);
                                             echo'
-                                            <small>'.$subRow['sub_name'].'</small>
-                                        <div class="progress mb-3" style="height: 5px">
-                                            <div class="progress-bar bg-primary" role="progressbar" style="width: '.$prgrs.'"
-                                                 aria-valuemin="0" aria-valuemax="100">
-                                            </div>
-                                        </div>
+                                            <p class="text-muted font-size-sm">'.$subRow['sub_name'].'</p>
                                             ';
                                         }
                                         ?>
-                                    
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 mb-3">
+                        </div>
+
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row gutters-sm">
+                        <div class="card mb-3">
                                 <div class="card h-100">
                                     <div class="card-body">
                                         <h5 class="card-title text-center"><b>Overall Performance</b></h5>
@@ -463,23 +474,23 @@ if (isset($_SESSION['login_user_admin'])) {
                                         <p class="card-text">Here is your monthly performance summary</p>
                                         <p class="card-text"><b>Communication</b></p>
                                         <div class="progress mb-3" style="height: 8px">
-                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 60%"
-                                                aria-valuenow="<?php echo "$avg" ?>" aria-valuemin="0"
-                                                aria-valuemax="100">
+                                            <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo ($avgq1)*10; ?>%"
+                                                aria-valuemin="0"
+                                                aria-valuemax="10">
                                             </div>
                                         </div>
                                         <p class="card-text"><b>Teaching</b></p>
                                         <div class="progress mb-3" style="height: 8px">
-                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 70%"
-                                                aria-valuenow="<?php echo "$avg" ?>" aria-valuemin="0"
-                                                aria-valuemax="100">
+                                            <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo ($avgq3)*10;?>%"
+                                                 aria-valuemin="0"
+                                                aria-valuemax="10">
                                             </div>
                                         </div>
                                         <p class="card-text"><b>Attitude</b></p>
                                         <div class="progress mb-3" style="height: 8px">
-                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 70%"
-                                                aria-valuenow="<?php echo "$avg" ?>" aria-valuemin="0"
-                                                aria-valuemax="100">
+                                            <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo ($avgq6)*10; ?>%"
+                                                aria-valuenow="" aria-valuemin="0"
+                                                aria-valuemax="10">
                                             </div>
                                         </div>
                                         <a href="#viewMore" class="btn btn-primary">
@@ -491,8 +502,6 @@ if (isset($_SESSION['login_user_admin'])) {
 
 
                         </div>
-
-
 
                     </div>
                 </div>
@@ -525,19 +534,6 @@ if (isset($_SESSION['login_user_admin'])) {
                             <div class="btn-group mr-2">
                             </div>
                         </div>
-                    </div>
-                    <div
-                        class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">
-                            Overall Analysis
-                        </h1>
-                        <div class="btn-toolbar mb-2 mb-md-0">
-                            <div class="btn-group mr-2">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container">
-                        <canvas id="myChart2" style="width:100%;max-width:600px"></canvas>
                     </div>
                     <br><br><br>
                 </center>
@@ -625,7 +621,7 @@ if (isset($_SESSION['login_user_admin'])) {
                     })
                     };
                 </script>';
-        echo '<meta http-equiv="refresh" content="1.5; URL=\'viewfacfeed.php\'" />';
+        echo '<meta http-equiv="refresh" content="1.5; URL=\'faculties.php\'" />';
     }
 } else {
     echo "<script>location.href='adminlogin.php'</script>";

@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = md5(mysqli_real_escape_string($con, $_POST['pwd']));
 
 
-    $sql = "SELECT s_id FROM students WHERE s_id = '$id' and password = '$password'";
+    $sql = "SELECT * FROM users WHERE u_id = '$id' and u_pass = '$password' and status='inactive'";
     $result = mysqli_query($con, $sql);
     $row = mysqli_fetch_array($result);
     $count = mysqli_num_rows($result);

@@ -2,6 +2,7 @@
 include "config.php";
 session_start();
 
+
 if (isset($_SESSION['login_user_admin'])) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $name = $_POST['name'];
@@ -10,53 +11,68 @@ if (isset($_SESSION['login_user_admin'])) {
         $date = date("Y/m/d");
         $utype = "student";
         $status = "active";
-        
-        $val = "select * from users where u_id='$usn'";
-        $valR = mysqli_query($con, $val);
-        $valRow = mysqli_fetch_array($valR);
-        $count = mysqli_num_rows($valR);
-        if($count>=1){
-            echo '<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
-                </script>
-                <script>
-                    window.onload = function swal() {
-                        Swal.fire({
-                            icon: \'error\',
-                    title: \'Oops...\',
-                    text: \'User already exists!\',
-                    })
-                    };
-                </script>';
-        }else{
-            $in = "insert into users(u_name,u_id,u_pass,doj,u_type,status) values('$name','$usn','$psw','$date','$utype','$status')";
-            $inR = mysqli_query($con,$in);
-            if(!$inR){
-                echo '<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
-                </script>
-                <script>
-                    window.onload = function swal() {
-                        Swal.fire({
-                            icon: \'error\',
-                    title: \'Oops...\',
-                    text: \'An error occured!\',
-                    })
-                    };
-                </script>';
-            }else{
-                echo '<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
-                </script>
-                <script>
-                    window.onload = function swal() {
-                        Swal.fire({
-                            icon: \'success\',
-                    title: \'Registered\',
-                    text: \'Student successfully registered!\',
-                    })
-                    };
-                </script>';
-            }
 
-        } 
+        if(strlen($usn)==4 && $usn[0]=='S'){
+
+                $val = "SELECT * from users where u_id='$usn'";
+                $valR = mysqli_query($con, $val);
+                $valRow = mysqli_fetch_array($valR);
+                $count = mysqli_num_rows($valR);
+                if($count>=1){
+                    echo '<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
+                        </script>
+                        <script>
+                            window.onload = function swal() {
+                                Swal.fire({
+                                    icon: \'error\',
+                            title: \'Oops...\',
+                            text: \'User already exists!\',
+                            })
+                            };
+                        </script>';
+                }else{
+                    $in = "INSERT into users(u_name,u_id,u_pass,doj,u_type,status) values('$name','$usn','$psw','$date','$utype','$status')";
+                    $inR = mysqli_query($con,$in);
+                    if(!$inR){
+                        echo '<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
+                        </script>
+                        <script>
+                            window.onload = function swal() {
+                                Swal.fire({
+                                    icon: \'error\',
+                            title: \'Oops...\',
+                            text: \'An error occured!\',
+                            })
+                            };
+                        </script>';
+                    }else{
+                        echo '<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
+                        </script>
+                        <script>
+                            window.onload = function swal() {
+                                Swal.fire({
+                                    icon: \'success\',
+                            title: \'Registered\',
+                            text: \'Student successfully registered!\',
+                            })
+                            };
+                        </script>';
+                    }
+
+                 }       
+        }else{
+            echo '<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
+                        </script>
+                        <script>
+                            window.onload = function swal() {
+                                Swal.fire({
+                                    icon: \'warning\',
+                            title: \'Warning!\',
+                            text: \'The USN should be in the form SNNN eg: S101\',
+                            })
+                            };
+                        </script>';
+        }
 
 
 
@@ -372,13 +388,35 @@ button:hover {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="event.php">
+                            <a class="nav-link " href="event.php">
                                 <span data-feather="bar-chart-2"></span>
                                 Event
                             </a>
+                            </li>
+
+                            <li class="nav-item">
+                            <a class="nav-link " href="examiner.php">
+                                <span data-feather="bar-chart-2"></span>
+                                Examiner
+                            </a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link " href="cExit.php">
+                                <span data-feather="bar-chart-2"></span>
+                                Course Exit
+                            </a>
+                            </li>
+                        
+                        <hr style="border-top: 2px solid #bbb;">
+                        <li class="nav-item">
+                            <a class="nav-link" href="notifications.php">
+                                <span data-feather="layers"></span>
+                                Notifications
+                            </a>
                         </li>
-                        <br><br><br>
-                        <br><br><br>
+
+                        
+
 
                         <hr style="border-top: 2px solid #bbb;">
                         <li class="nav-item">
@@ -389,7 +427,7 @@ button:hover {
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="manageUsers.php">
+                            <a class="nav-link active" href="manageUsers.php">
                                 <span data-feather="layers"></span>
                                 Manage Users
                             </a>
@@ -417,7 +455,7 @@ button:hover {
     <input type="text" placeholder="Enter Name" name="name" required>
 
     <label for="usn"><b>USN</b></label>
-    <input type="text" placeholder="Enter USN" pattern="[A-Za-z]{1,25}" title="Special characters are not allowed!" name="usn" required>
+    <input type="text" name="usn" placeholder="Enter USN" required>
 
     <label for="psw"><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="psw" id="password" required>

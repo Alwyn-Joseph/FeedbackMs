@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     })
                             };
                         </script>';
-                        echo '<meta http-equiv="refresh" content="1.5; URL=\'test.php\'" />';
+                        echo '<meta http-equiv="refresh" content="1.5; URL=\'Home.php\'" />';
   }else{
     echo '<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
                         </script>
@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     })
                             };
                         </script>';
-                        echo '<meta http-equiv="refresh" content="1.5; URL=\'test.php\'" />';
+                        echo '<meta http-equiv="refresh" content="1.5; URL=\'Home.php\'" />';
   }
 }else{
   echo '<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
@@ -596,10 +596,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="modal-body">
           <form action="alumniLogin.php" method="post">
             <div class="form-group">
-              <input type="text" class="form-control" name="pwd" placeholder="Enter your Student Id" required="required">
+              <input type="text" class="form-control" name="id" placeholder="Enter your Student Id" required="required">
             </div>
             <div class="form-group">
-              <input type="password" class="form-control" name="id" placeholder="Enter your Password" required="required">					
+              <input type="password" class="form-control" name="pwd" placeholder="Enter your Password" required="required">					
             </div>
             <div class="form-group">
               <input type="submit" class="btn btn-success btn-block btn-lg" name="Alumni_Login" value="Login">

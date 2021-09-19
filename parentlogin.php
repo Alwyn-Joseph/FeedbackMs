@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $p_mbl = $_POST['mbl'];
 
 
-    $sql = "SELECT * FROM parents_details WHERE usn = 'id' and mother_mob_no='$p_mbl' or father_mob_no='$p_mbl'";
+    $sql = "SELECT * FROM parent_details WHERE usn = '$id' and mother_mob_no='$p_mbl' or father_mob_no='$p_mbl'";
     $result = mysqli_query($con, $sql);
     $row = mysqli_fetch_array($result);
     $count = mysqli_num_rows($result);
@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="text" name="id" placeholder="Enter your ward's USN" required>
 
             <label for="psw"><b>Parent Mobile No</b></label>
-            <input type="text" name="pwd" placeholder="Enter your Mobile Number" required>
+            <input type="text" name="mbl" placeholder="Enter your Mobile Number" required>
 
             <button type="submit" name="submit">Login</button>
 

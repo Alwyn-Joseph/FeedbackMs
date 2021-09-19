@@ -9,7 +9,7 @@ if (isset($_SESSION['login_user_admin'])) {
         $id = $_POST['uname'];
         $password = md5($_POST['pwd']);
 
-        $sql = "SELECT u_id FROM users WHERE u_name = '$id' and u_pass = '$password' and u_type='admin'";
+        $sql = "SELECT * FROM users WHERE u_name = '$id' and u_pass = '$password' and u_type='admin' and status='active'";
         $result = mysqli_query($con, $sql);
         $row = mysqli_fetch_array($result);
         $count = mysqli_num_rows($result);
@@ -55,10 +55,10 @@ if (isset($_SESSION['login_user_admin'])) {
 
         <div class="container">
             <label for="uname"><b>Username</b></label>
-            <input type="text" name="uname" placeholder="Enter Username" required>
+            <input type="text" name="uname" placeholder="Enter Username" oninvalid="this.setCustomValidity('User ID can\'t be empty')" oninput="setCustomValidity('')" required>
 
             <label for="psw"><b>Password</b></label>
-            <input type="password" name="pwd" placeholder="Enter Password" required>
+            <input type="password" name="pwd" placeholder="Enter Password" oninvalid="this.setCustomValidity('Password can\'t be empty')" oninput="setCustomValidity('')" required>
 
             <button type="submit" name="submit">Login</button>
 

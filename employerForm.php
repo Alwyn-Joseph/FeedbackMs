@@ -7,8 +7,7 @@ if (isset($_SESSION['login_user_employer'])) {
     $userId = $_SESSION['login_user_employer'];
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $e_mail = $userId;
-        $q = "select * from employer where e_mail='$e_mail' limit 1";
+        $q = "select * from employer_details where e_id='$userId' limit 1";
         $r = mysqli_query($con, $q);
         $f = mysqli_fetch_array($r);
         $e_id = $f['e_id'];
@@ -61,7 +60,7 @@ if (isset($_SESSION['login_user_employer'])) {
                         })
                         };
                     </script>';
-                    echo '<meta http-equiv="refresh" content="1.5; URL=\'employerForm.php\'" />';
+                    echo '<meta http-equiv="refresh" content="1.5; URL=\'Home.php#login\'" />';
             }
     }
 ?>

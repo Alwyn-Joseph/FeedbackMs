@@ -89,7 +89,7 @@ if (isset($_SESSION['login_user_alumni'])) {
                     };
                 </script>';
                 session_destroy();
-        echo '<meta http-equiv="refresh" content="2.5; URL=\'test.php\'" />';
+        echo '<meta http-equiv="refresh" content="2.5; URL=\'Home.php\'" />';
         }
     }
 

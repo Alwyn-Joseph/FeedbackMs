@@ -2,51 +2,26 @@
 include "config.php";
 session_start();
 
-if (isset($_SESSION['login_user_student'])) {
+if (isset($_SESSION['login_user_faculty'])) {
 
-    $userId = $_SESSION['login_user_student'];
+    $userId = $_SESSION['login_user_faculty'];
 
-    $query1 = "select * from student_details where s_id='$userId'";
+    $query1 = "select * from users where u_id='$userId'";
     $result1 = mysqli_query($con, $query1);
     $row1 = mysqli_fetch_array($result1);
-    $cId = $row1['c_id'];
-
-    $query2 = "select * from subjects where c_id='$cId'";
-    $result2 = mysqli_query($con, $query2);
-    $row2 = mysqli_fetch_array($result2);
-    $fId = $row2['f_id'];
-
-    $query3 = "select * from faculty_details where f_id='$fId'";
-    $result3 = mysqli_query($con, $query3);
-    $row3 = mysqli_fetch_array($result3);
-    $facName = $row3['f_name'];
-
+    $fn = $row1['u_name'];
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $s_id = $userId;
-        $f_id = $_POST['subjects'];
-
-        $q1 = $_POST['101'];
-        $q2 = $_POST['102'];
-        $q3 = $_POST['103'];
-        $q4 = $_POST['104'];
-        $q5 = $_POST['105'];
-        $q6 = $_POST['106'];
-        $q7 = $_POST['107'];
-        $q8 = $_POST['108'];
-        $q9 = $_POST['109'];
-        $q10 = $_POST['110'];
-        $q11 = $_POST['111'];
-        $q12 = $_POST['112'];
-        $q13 = $_POST['113'];
-        $q14 = $_POST['114'];
-        $q15 = $_POST['115'];
-        $q16 = $_POST['116'];
-        $q17 = $_POST['117'];
-        $q18 = $_POST['118'];
+        $f_id = $userId;
+        $f_name = $fn;
+        
+        $q1 = $_POST['216'];
+        $q2 = $_POST['217'];
+        $q3 = $_POST['218'];
+        $q4 = $_POST['219'];
         $cmnts = $_POST['comments'];
 
-        $sql = "insert into faculty_feedback(f_id,f_name,s_id,q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13,q14,q15,q16,q17,cmnt) values('$f_id','$facName','$s_id','$q1','$q2','$q3','$q4','$q5','$q6','$q7','$q8','$q9','$q10','$q11','$q12','$q13','$q14','$q15','$q16','$q17','$cmnts')";
+        $sql = "insert into COURSE_feedback(s_id,e_name,q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,cmnt) values('$s_id','Workshop on PHP','$q1','$q2','$q3','$q4','$q5','$q6','$q7','$q8','$q9','$q10','$q11','$q12','$cmnts')";
         $result = mysqli_query($con, $sql);
 
             if (!$result) {
@@ -89,7 +64,7 @@ if (isset($_SESSION['login_user_student'])) {
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.72.0">
-    <title>Faculty | Provide Your Feedback</title>
+    <title>Event | Provide Your Feedback</title>
 
     <link rel="canonical" href="https://v5.getbootstrap.com/docs/5.0/examples/dashboard/">
 
@@ -187,8 +162,8 @@ if (isset($_SESSION['login_user_student'])) {
 <body>
     <div class="mb-3" id="title">
         <center>
-            <h1 class="display-4 text-white">Facility Feedback Form</h1>
-            <small class="text-white">Feedback provided about facilities</small>
+            <h1 class="display-4 text-white">Event Feedback Form</h1>
+            <small class="text-light">Feedback provided about events</small>
             <br><br>
         </center>
     </div>
@@ -196,12 +171,16 @@ if (isset($_SESSION['login_user_student'])) {
     <form method="post" action="">
         <div class="mb-3">
             <p class="">
-                You are requested to provide the feedback on faculty about their punctuality, subject command etc.,
-                which helps to meet the requirement by the faculty
+                This questionnaire is to collect information relating to your satisfaction towards facilities and
+                services provided for
+                creating conducive atmosphere for teaching and learning. The information provided by you will be kept
+                confidential and
+                will be used as important feedback for quality improvement of the programme of studies/institution.
                 <br>
                 <b>Directions:</b><br>
                 For each item please indicate your level of satisfaction with the following statement by choosing a
-                score between Strongly Agree and Strongly Disagree. <br>
+                scorebetween 1 and 5. <br>
+                <b>(1 – strongly disagree, 2 - disagree, 3 – not sure, 4 – agree, 5 – strongly agree)</b>
                 <br><br>
             </p>
             <b>
@@ -211,81 +190,65 @@ if (isset($_SESSION['login_user_student'])) {
                         style="border-color:grey;  border-style: solid;padding:10px" readonly
                         value="<?php echo $userId; ?>" required>
                 </div>
-                <br>
-                <div class="dropdown">
-                    <select class="btn btn-secondary dropdown-toggle bg-light text-dark" name="subjects">
-                        <?php
-                        $querydrop = "select * from subjects where c_id='$cId'";
-                        $resultdrop = mysqli_query($con, $querydrop);
-                        while ($rowdrop = mysqli_fetch_array($resultdrop)) {
-                            echo '
-                            <option class="dropdown-item" value="' . $rowdrop['f_id'] . '" required>' . $rowdrop['sub_name'] . '</option>';
-                        }
-                        ?>
-
-                    </select>
-                </div>
-                </b>
-                <br>
-  
+            </b>
+            <br>
                 <?php
-                    $query4 = "select * from questions where f_id='FM101'";
+                    $query4 = "select * from questions where f_id='FM108'";
                     $result4 = mysqli_query($con, $query4);
                         while ($row4 = mysqli_fetch_array($result4)) {
-                                echo '<div class="container text-center" id="qsnbx">
-                                <br>
-                                <label class="form-label"><b>' . $row4['q_desc'] . '</b></label>
-                                <br><br>                  
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="' . $row4['q_id'] . '" value="1" id="radio" required>
-                                            <label class="form-check-label" for="q1o1">
-                                            Strongly Disagree
-                                            </label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="' . $row4['q_id'] . '" value="2" id="radio">
-                                            <label class="form-check-label" for="q1o2">
-                                                Disagree
-                                            </label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="' . $row4['q_id'] . '" value="3" id="radio">
-                                            <label class="form-check-label" for="q1o3">
-                                                Not Sure
-                                            </label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="' . $row4['q_id'] . '" value="4" id="radio">
-                                            <label class="form-check-label" for="q1o4">
-                                                Agree
-                                            </label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="' . $row4['q_id'] . '" value="5" id="radio">
-                                            <label class="form-check-label" for="q1o5">
-                                                Strongly Agree
-                                            </label>
-                                        </div>
-                                        <br>
-                                        <br>
-                                        </div>
-                                        <br>';
+                            echo '<div class="container text-center" id="qsnbx">
+                            <br>
+                            <label class="form-label"><b>' . $row4['q_desc'] . '</b></label>
+                            <br><br>                  
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="' . $row4['q_id'] . '" value="1" id="radio" required>
+                                        <label class="form-check-label" for="q1o1">
+                                        Strongly Disagree
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="' . $row4['q_id'] . '" value="2" id="radio">
+                                        <label class="form-check-label" for="q1o2">
+                                            Disagree
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="' . $row4['q_id'] . '" value="3" id="radio">
+                                        <label class="form-check-label" for="q1o3">
+                                            Not Sure
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="' . $row4['q_id'] . '" value="4" id="radio">
+                                        <label class="form-check-label" for="q1o4">
+                                            Agree
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="' . $row4['q_id'] . '" value="5" id="radio">
+                                        <label class="form-check-label" for="q1o5">
+                                            Strongly Agree
+                                        </label>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    </div>
+                                    <br>';
                         }
                     ?>
 
-        </div>
         <br>
         <div>
-            <label class="form-label">Any other comments</label>
+            <label class="form-label">Any other comments
+            </label>
             <br>
             <textarea class="form-control" type="text" name="comments" id="" rows="5" required></textarea>
         </div>
         <br>
         <br>
+        <br>
         <button type="submit" class="btn btn-primary" id="submit">Submit</button>
     </form>
-    
-    <br><br>
 </body>
 <script>
 </script>
@@ -299,5 +262,5 @@ if (isset($_SESSION['login_user_student'])) {
 </html>
 <?php
 }else{
-echo '<meta http-equiv="refresh" content="1.5; URL=\'studentlogin.php\'" />';
+    echo '<meta http-equiv="refresh" content="1.5; URL=\'facultylogin.php\'" />';
 }

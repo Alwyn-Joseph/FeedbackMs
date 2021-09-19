@@ -233,13 +233,32 @@ if (isset($_SESSION['login_user_admin'])) {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="event.php">
+                            <a class="nav-link " href="event.php">
                                 <span data-feather="bar-chart-2"></span>
                                 Event
                             </a>
+                            </li>
+
+                            <li class="nav-item">
+                            <a class="nav-link " href="examiner.php">
+                                <span data-feather="bar-chart-2"></span>
+                                Examiner
+                            </a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link " href="cExit.php">
+                                <span data-feather="bar-chart-2"></span>
+                                Course Exit
+                            </a>
+                            </li>
+                        
+                        <hr style="border-top: 2px solid #bbb;">
+                        <li class="nav-item">
+                            <a class="nav-link" href="notifications.php">
+                                <span data-feather="layers"></span>
+                                Notifications
+                            </a>
                         </li>
-                         <br><br><br>
-                        <br><br><br>
 
                         <hr style="border-top: 2px solid #bbb;">
                         <li class="nav-item">
@@ -248,6 +267,7 @@ if (isset($_SESSION['login_user_admin'])) {
                                 Manage Forms
                             </a>
                         </li>
+
 
                         <li class="nav-item">
                             <a class="nav-link" href="manageUsers.php">
